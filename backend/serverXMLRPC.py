@@ -19,12 +19,12 @@ def getScan():
 
 def sendStateProgram():
     with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/outilArchitecture/backend/fichier_gravure_simulation/statemachine.txt",mode = "w+", encoding="utf-8") as file:
-        file.write(1)
+        file.write(str(1))
     print("Programme en Cours")
     time.sleep(2)
     print('Programme Finis')
     with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/outilArchitecture/backend/fichier_gravure_simulation/statemachine.txt",mode = "w+", encoding="utf-8") as file:
-        file.write(0)
+        file.write(str(0))
     return True
 
 def getStateProgram():
@@ -42,7 +42,7 @@ def getHistorique():
 
 def sendHistorique(value:str):
     with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/outilArchitecture/backend/fichier_gravure_simulation/historique.txt",mode = "w+", encoding="utf-8") as file:
-        file.write(value)
+        file.write(0)
     return True
 
 

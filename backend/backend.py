@@ -115,8 +115,12 @@ async def send_historique(websocket:WebSocket):
 async def websocket_historique(websocket:WebSocket):
     await send_historique(websocket)
 
+class HistoriqueData(BaseModel):
+    step_program: int
+
 @app.post("/historique")
-def write_historique(step_program:int):
+async def write_historique(data: HistoriqueData):
+    step_program = data.step_program
     try:
         step_program = str(step_program)
         with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/outilArchitecture/backend/fichier_gravure_simulation/historique.txt", mode="w+", encoding="utf-8") as file:

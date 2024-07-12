@@ -13,7 +13,8 @@
             });
             const result = await response.json();
             console.log("Response from server:", result);
-        } catch (error) {
+        } 
+        catch (error) {
             console.error("Error sending POST request:", error);
         }
     }

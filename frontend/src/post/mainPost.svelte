@@ -1,7 +1,8 @@
 <script>
-  import MachinePost from "./subPost/MachinePost.svelte";
-import PortePost from "./subPost/PortePost.svelte";
-  import ScanPost from "./subPost/ScanPost.svelte";
+    import MachinePost from "./subPost/MachinePost.svelte";
+    import PortePost from "./subPost/PortePost.svelte";
+    import ScanPost from "./subPost/ScanPost.svelte";
+    import HistoriquePost from "./subPost/HistoriquePost.svelte";
 </script>
 
 <style>
@@ -26,6 +27,11 @@ import PortePost from "./subPost/PortePost.svelte";
     display: flex;
     flex-direction: column;
 }
+
+.frame_two{
+    display: flex;
+    flex-direction: column;
+}
 </style>
 
 
@@ -39,6 +45,7 @@ import PortePost from "./subPost/PortePost.svelte";
         </div>
         <div class= "frame_two">
             <ScanPost />
+            <HistoriquePost />
         </div>
     </div>
 </div>
