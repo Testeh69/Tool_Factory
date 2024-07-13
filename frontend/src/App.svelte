@@ -20,6 +20,5 @@ main{
 	
 	<MainGet />
 	<MainPost />
-	
 </main>
 

@@ -64,8 +64,8 @@
 <div class="scan">
     <div class="light_state_scan {scanStatus === 1 ? 'verte' : 'rouge'}"></div>
     {#if scanStatus}
-        <span>Loaded ! </span>
+        <span>Program Loaded ! </span>
     {:else}
-        <span>Nothing</span>
+        <span>No Program</span>
     {/if}
 </div>

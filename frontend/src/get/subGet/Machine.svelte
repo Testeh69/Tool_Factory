@@ -61,9 +61,10 @@ onMount(()=>{
 
 <div class = "machine">
     <div class = "light_state_machine {stateMachine === 1 ? 'verte':'rouge'}"></div>
+    <span>Machine</span>
     {#if stateMachine}
-    <span>En cours ...</span>
+    <span>en marche ...</span>
     {:else}
-    <span>Pause</span>
+    <span>en pause</span>
     {/if}
 </div>

@@ -100,6 +100,6 @@
 </style>
 
 <div class="element">
-    <span>Temps de Cycle {timeCycleGet} secondes: </span>
+    <span>Temps de Cycle actuel: {timeCycleGet} s </span>
     <input type="number" bind:value={timeCycle} class={validated === null ? '' : (validated ? 'green' : 'red')} on:keydown={handleKeyDown} min=0 max=60 required>
 </div>

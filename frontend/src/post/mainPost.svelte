@@ -26,11 +26,11 @@
 <div class= "controle">
     <div class= "window_controleur">
         <h2><span class="title">CONTROLEUR</span></h2>
-        <TimePost/>
         <MachinePost />
         <PortePost />
         <ScanPost />
         <HistoriquePost />
+        <TimePost/>
     </div>
  
 </div>
