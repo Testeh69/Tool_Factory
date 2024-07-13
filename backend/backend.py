@@ -192,3 +192,34 @@ def read_statemachine():
     with open(file_path, mode="r+", encoding="utf-8") as file:
         result = file.read()
     return{"state_machine":int(result)}
+
+
+#Le fichier timecycle indique le temps de cycle de la machine
+#1 to 60
+
+
+class TimeCycle(BaseModel):
+    time_cycle:int
+
+@app.post("/cycle")
+async def write_cycle(data: TimeCycle):
+    time_cycle = data.time_cycle
+    file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/timeCycle.txt"
+    try:
+        time_cycle = str(time_cycle)
+        with open(file_path, mode="w+", encoding="utf-8") as file:
+            response = file.write(time_cycle)
+            return True
+    except FileNotFoundError:
+        return False
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/cycle")
+def read_time_cycle():
+    file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/timeCycle.txt"
+    with open(file_path, mode="r+", encoding="utf-8") as file:
+        result = file.read()
+    return{"time_cycle":int(result)}
+

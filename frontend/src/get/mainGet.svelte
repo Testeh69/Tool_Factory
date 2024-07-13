@@ -6,55 +6,36 @@ import Machine from "./subGet/Machine.svelte";
 </script>
 
 <style>
-    .Supervision_left, .Supervision_right {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        margin-left: 20px;
-        margin-top: 20px; 
-    }
-
-.Supervision{
-    display: flex;
-    flex-direction: row;
+.window_observeur{
+    background-color: rgb(84, 2, 84);
+    box-shadow:  3px 2px hsla(305, 68%, 83%, 0.5);    
+    height:80vh;
+    margin: 30px;
+    border-radius: 10px;
+    border: solid 0.1px hsla(305, 68%, 83%, 0.5);
+    padding: 40px;
 }
 
-    .frame_one {
-        display: flex;
-        flex-direction: column;
-        margin-right: 20px;
-    }
-.Screen{
+
+.title_window{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 }
-  
+.title{
+    color:#ebe8ee
+}
+
 </style>
 <div class= "Screen">
-    <div class="Supervision">
-        <div class="Supervision_left">
-            <div class="frame_one">
-                <Porte /> 
-                <Machine /> 
-                <Scan /> 
-            </div>
-            <div class="frame_two">
-                <Historique />
-            </div>
-            <div class="frame_three">
-            </div>
+    <div class= "window_observeur">
+        <div class="title_window">
+        <h2><span class="title">OBSERVEUR</span></h2>
         </div>
-        <div class="Supervision_right">
-            <div class="frame_one">
-               
-            </div>
-            <div class="frame_two">
-              
-            </div>
-            <div class="frame_three">
-            </div>
-        </div>
+        <Machine />
+        <Porte />
+        <Scan />
+        <Historique />
     </div>
+ 
 </div>

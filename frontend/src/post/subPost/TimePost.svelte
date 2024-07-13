@@ -1,17 +1,34 @@
 <script>
-    import { onMount } from 'svelte';
-
-    let inputValue = '0';
+    import { onMount, onDestroy } from 'svelte';
+    let url = "http://127.0.0.1:8081/cycle"
+    let timeCycle = '0';
     let validated = null;
+    let timeCycleGet;
+    let interval;
+
+    async function fetchData() {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+        }
+        const json = await response.json();
+        timeCycleGet =  json.time_cycle
+        
+    } catch (error) {
+        console.error(error.message);
+
+    }}
+
 
     async function postData() {
         try {
-            const response = await fetch("http://127.0.0.1:8081/historique", {
+            const response = await fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ step_program: inputValue })
+                body: JSON.stringify({ time_cycle: timeCycle })
             });
 
             if (!response.ok) {
@@ -29,12 +46,21 @@
 
     function handleKeyDown(event) {
         if (event.key === "Enter") {
-            if (inputValue > 6){
-                inputValue = 6
+            if (timeCycle > 60){
+                timeCycle = 60
             }
             postData();
         }
     }
+
+
+    onMount(()=>{
+        interval = setInterval(fetchData, 500)
+    })
+
+    onDestroy(()=>{
+        clearInterval(interval)
+    })
 </script>
 
 <style>
@@ -51,8 +77,8 @@
         display: flex;
         flex-direction: column;
     }
+    
 
-  
     input[type="number"] {
         display: flex;
         text-align: center;
@@ -74,6 +100,6 @@
 </style>
 
 <div class="element">
-    <span>Etape sélectionné {inputValue}: </span>
-    <input type="number" bind:value={inputValue} class={validated === null ? '' : (validated ? 'green' : 'red')} on:keydown={handleKeyDown} min=0 max=6 required>
+    <span>Temps de Cycle {timeCycleGet} secondes: </span>
+    <input type="number" bind:value={timeCycle} class={validated === null ? '' : (validated ? 'green' : 'red')} on:keydown={handleKeyDown} min=0 max=60 required>
 </div>

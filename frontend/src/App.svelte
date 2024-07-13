@@ -3,17 +3,23 @@
 	import MainPost from "./post/mainPost.svelte";
 </script>
 <style>
-.app{
+
+
+main{
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	align-items: center;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
 	justify-content: center;
 }
 </style>
 <main>
-	<div class = "app">
+	
 	<MainGet />
 	<MainPost />
-	</div>
+	
 </main>
 
