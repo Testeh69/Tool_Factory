@@ -21,7 +21,7 @@ async def send_scan_status(websocket:WebSocket):
     await websocket.accept()
     try:
         while True:
-            with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/outilArchitecture/backend/fichier_gravure_simulation/scan.txt", mode="r", encoding="utf-8") as file:
+            with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/scan.txt", mode="r", encoding="utf-8") as file:
                 response = int(file.read())
                 scan_status = response
                 await websocket.send_json({"scan_status": scan_status})
@@ -38,13 +38,21 @@ async def websocket_scan(websocket:WebSocket):
 
 class ScanState(BaseModel):
     state_scan:bool
+
+@app.get("/scan")
+def read_scan():
+    file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/scan.txt"
+    with open(file_path, mode="r+", encoding="utf-8") as file:
+        result = file.read()
+    return{"scan":int(result)}
     
+   
 @app.post("/scan")
 def write_scan(loaded_layout: ScanState):
     loaded_layout_value = 1 if loaded_layout.state_scan else 0
     try:
         loaded_layout_str = str(loaded_layout_value)
-        file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/outilArchitecture/backend/fichier_gravure_simulation/scan.txt"
+        file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/scan.txt"
         with open(file_path, mode="w+", encoding="utf-8") as file:
             file.write(loaded_layout_str)
         return {"success": True}
@@ -61,7 +69,7 @@ async def send_porte_status(websocket: WebSocket):
     await websocket.accept()
     try:
         while True:
-            with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/outilArchitecture/backend/fichier_gravure_simulation/porte.txt", mode="r", encoding="utf-8") as file:
+            with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/porte.txt", mode="r", encoding="utf-8") as file:
                 response = int(file.read())
                 porte_ouverte = response
                 await websocket.send_json({"Porte_Ouverte": porte_ouverte})
@@ -83,7 +91,7 @@ def write_porte(porte_state: PorteState):
     porte_ouverte = 1 if porte_state.porte_ouverte else 0
     try:
         porte_ouverte = str(porte_ouverte)
-        file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/outilArchitecture/backend/fichier_gravure_simulation/porte.txt"
+        file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/porte.txt"
         with open(file_path, mode="w+", encoding="utf-8") as file:
             file.write(porte_ouverte)
             return {"success": True}
@@ -92,14 +100,20 @@ def write_porte(porte_state: PorteState):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-
+@app.get("/porte")
+def read_porte():
+    file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/porte.txt"
+    with open(file_path, mode="r+", encoding="utf-8") as file:
+        result = file.read()
+    return{"porte":int(result)}
+    
 #Le fichier historique indique a qu'elle étape le robot se situe et si il y a un problème, le robot doit agir directement à cette étape
 #0 à 6
 async def send_historique(websocket:WebSocket):
     await websocket.accept()
     try:
         while True:
-            with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/outilArchitecture/backend/fichier_gravure_simulation/historique.txt", mode="r", encoding="utf-8") as file:
+            with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/historique.txt", mode="r", encoding="utf-8") as file:
                 response = int(file.read())
                 historique = response
                 await websocket.send_json({"historique": historique})
@@ -123,7 +137,7 @@ async def write_historique(data: HistoriqueData):
     step_program = data.step_program
     try:
         step_program = str(step_program)
-        with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/outilArchitecture/backend/fichier_gravure_simulation/historique.txt", mode="w+", encoding="utf-8") as file:
+        with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/historique.txt", mode="w+", encoding="utf-8") as file:
             response = file.write(step_program)
             return True
     except FileNotFoundError:
@@ -139,7 +153,7 @@ async def send_machine_status(websocket:WebSocket):
     await websocket.accept()
     try:
         while True:
-            with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/outilArchitecture/backend/fichier_gravure_simulation/statemachine.txt", mode="r", encoding="utf-8") as file:
+            with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/statemachine.txt", mode="r", encoding="utf-8") as file:
                 response = int(file.read())
                 state_machine = response
                 await websocket.send_json({"state_machine": state_machine})
@@ -163,7 +177,7 @@ def write_statemachine(state_machine: MachineState):
     value = 1 if state_machine.state_machine else 0
     try:
         value = str(value)
-        file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/outilArchitecture/backend/fichier_gravure_simulation/statemachine.txt"
+        file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/statemachine.txt"
         with open(file_path, mode="w+", encoding="utf-8") as file:
             file.write(value)
         return {"success": True}
@@ -171,3 +185,10 @@ def write_statemachine(state_machine: MachineState):
         raise HTTPException(status_code=404, detail="File not found")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@app.get("/statemachine")
+def read_statemachine():
+    file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/statemachine.txt"
+    with open(file_path, mode="r+", encoding="utf-8") as file:
+        result = file.read()
+    return{"state_machine":int(result)}

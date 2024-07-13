@@ -1,22 +1,51 @@
 <script>
-    let programLoaded = false;
+    import { onMount, onDestroy } from "svelte";
+
+    const url = "http://127.0.0.1:8081/scan";
+    let programLoaded = 1;
+    let interval;
+
+    async function fetchData() {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+        }
+        const json = await response.json();
+        programLoaded =  json.scan
+        
+    } catch (error) {
+        console.error(error.message);
+
+    }}
+
 
     async function toggleMachine() {
-        programLoaded = !programLoaded;
-        try {
-            const response = await fetch("http://127.0.0.1:8081/scan", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ state_scan: programLoaded })
-            });
-            const result = await response.json();
-            console.log("Response from server:", result);
-        } catch (error) {
-            console.error("Error sending POST request:", error);
-        }
+    programLoaded = programLoaded === 1 ? 0 : 1; 
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ state_scan: programLoaded}),
+      });
+      const result = await response.json();
+    } catch (error) {
+      console.error("Error sending POST request:", error);
     }
+  }
+  
+
+  onMount(() =>{
+    interval = setInterval(fetchData,1000)
+})
+
+onDestroy(()=>{
+    clearInterval(interval)
+})
+
+  
 </script>
 
 <style>
@@ -55,7 +84,7 @@
         cursor: pointer;
         position: absolute;
         transition: left 0.3s;
-        top: 2px; /* Ajustement pour centrer verticalement */
+        top: 2px; 
     }
 
     .btn__toggle.play {
@@ -68,12 +97,14 @@
         left: 0; 
     }
 </style>
-
 <div class="element">
-    <span>Programme Chargé: </span>
+    <span>Statut du Programme: </span>
+    <h3><strong>{programLoaded === 1? 'Load' : 'Unload'}</strong></h3>
+
     <div class="border">
-        <button type="button" class="btn__toggle {programLoaded ? 'play' : 'pause'}" on:click={toggleMachine}>
-            <p>{programLoaded ? 'Load' : ''}</p>
+        {#if programLoaded !== undefined}
+        <button type="button" class="btn__toggle {programLoaded === 1 ? "play":"pause"}"   on:click={toggleMachine}>
         </button>
-    </div>
+        {/if}
+    </div> 
 </div>
