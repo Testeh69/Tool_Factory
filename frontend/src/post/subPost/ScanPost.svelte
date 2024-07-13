@@ -96,14 +96,16 @@ onDestroy(()=>{
         background-color: red;
         left: 0; 
     }
+
+
 </style>
 <div class="element">
     <span>Statut du Programme: <strong>{programLoaded === 1? 'Load' : 'Unload'}</strong></span>
 
     <div class="border">
         {#if programLoaded !== undefined}
-        <button type="button" class="btn__toggle {programLoaded === 1 ? "play":"pause"}"   on:click={toggleMachine}>
-        </button>
+            <button type="button" class="btn__toggle {programLoaded === 1 ? "play":"pause"}"   on:click={toggleMachine}>
+            </button>
         {/if}
     </div> 
 </div>

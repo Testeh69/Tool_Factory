@@ -100,8 +100,10 @@
 <div class="element">
     <span>Porte: </span>
     <div class="border">
+        {#if porteOuverte !== undefined}
         <button type="button" class="btn__toggle {porteOuverte ? 'ouverte' : 'fermee'}" on:click={togglePorte}>
             <p>{porteOuverte ? 'O' : 'F'}</p>
         </button>
+        {/if}
     </div>
 </div>

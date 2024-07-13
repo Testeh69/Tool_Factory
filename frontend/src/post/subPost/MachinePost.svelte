@@ -1,10 +1,14 @@
 <script>
-    let machinePlay = false;
+    import {onMount, onDestroy} from "svelte"
 
+    let interval;
+    let machinePlay = false;
+    const url = "http://127.0.0.1:8081/statemachine"
+    
     async function toggleMachine() {
         machinePlay = !machinePlay;
         try {
-            const response = await fetch("http://127.0.0.1:8081/statemachine", {
+            const response = await fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -17,6 +21,31 @@
             console.error("Error sending POST request:", error);
         }
     }
+
+    async function fetchData() {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+        }
+        const json = await response.json();
+        machinePlay =  json.state_machine
+        
+    } catch (error) {
+        console.error(error.message);
+
+    }}
+
+
+    onMount(()=>{
+        interval = setInterval(fetchData, 1000);
+    })
+
+    onDestroy(()=>{
+        clearInterval(interval)
+    })
+
+
 </script>
 
 <style>
@@ -72,8 +101,10 @@
 <div class="element">
     <span>Programme Machine: </span>
     <div class="border">
+        {#if machinePlay!== undefined}
         <button type="button" class="btn__toggle {machinePlay ? 'play' : 'pause'}" on:click={toggleMachine}>
             <p>{machinePlay ? 'Play' : 'Pause'}</p>
         </button>
+        {/if}
     </div>
 </div>
