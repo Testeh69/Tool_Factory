@@ -104,8 +104,8 @@ def write_porte(porte_state: PorteState):
 def read_porte():
     file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/porte.txt"
     with open(file_path, mode="r+", encoding="utf-8") as file:
-        result = file.read()
-    return{"porte":int(result)}
+        result = True if int(file.read()) == 1 else False
+    return{"porte":bool(result)}
     
 #Le fichier historique indique a qu'elle étape le robot se situe et si il y a un problème, le robot doit agir directement à cette étape
 #0 à 6

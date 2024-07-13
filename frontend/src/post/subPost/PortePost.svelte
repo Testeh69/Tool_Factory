@@ -1,10 +1,30 @@
 <script>
+    import {onMount, onDestroy} from "svelte";
+
+    const url = "http://127.0.0.1:8081/porte"
     let porteOuverte = false;
+    let interval
+
+
+    async function fetchData() {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+        throw new Error(`Response status: ${response.status}`);
+        }
+        const json = await response.json();
+        porteOuverte =  json.porte
+        
+    } catch (error) {
+        console.error(error.message);
+
+    }}
+
 
     async function togglePorte() {
         porteOuverte = !porteOuverte;
         try {
-            const response = await fetch("http://127.0.0.1:8081/porte", {
+            const response = await fetch(url, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -18,6 +38,13 @@
             console.error("Error sending POST request:", error);
         }
     }
+    onMount(()=>{
+        interval = setInterval(fetchData, 1000)
+    })
+
+    onDestroy(()=>{
+        clearInterval(interval)
+    })
 </script>
 
 <style>

@@ -98,8 +98,7 @@ onDestroy(()=>{
     }
 </style>
 <div class="element">
-    <span>Statut du Programme: </span>
-    <h3><strong>{programLoaded === 1? 'Load' : 'Unload'}</strong></h3>
+    <span>Statut du Programme: <strong>{programLoaded === 1? 'Load' : 'Unload'}</strong></span>
 
     <div class="border">
         {#if programLoaded !== undefined}
