@@ -2,6 +2,8 @@ from fastapi import FastAPI, HTTPException, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 import asyncio
 from pydantic import BaseModel
+from functionJson import inJsonGetSpecificData, inJsonUpdateSpecificData
+
 app = FastAPI()
 
 # Configuration pour permettre à toutes les origines d'accéder à l'API
@@ -21,10 +23,9 @@ async def send_scan_status(websocket:WebSocket):
     await websocket.accept()
     try:
         while True:
-            with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/scan.txt", mode="r", encoding="utf-8") as file:
-                response = int(file.read())
-                scan_status = response
-                await websocket.send_json({"scan_status": scan_status})
+            scan_status = inJsonGetSpecificData("scan_status")
+            
+            await websocket.send_json({"scan_status": scan_status})
             await asyncio.sleep(1)          
     except FileNotFoundError:
         await websocket.close(code=1011, reason="File not found")
@@ -36,25 +37,21 @@ async def send_scan_status(websocket:WebSocket):
 async def websocket_scan(websocket:WebSocket):
     await send_scan_status(websocket)
 
-class ScanState(BaseModel):
-    state_scan:bool
+
 
 @app.get("/scan")
 def read_scan():
-    file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/scan.txt"
-    with open(file_path, mode="r+", encoding="utf-8") as file:
-        result = file.read()
+    result = inJsonGetSpecificData("scan_status")
     return{"scan":int(result)}
-    
+
+class ScanState(BaseModel):
+    state_scan:bool   
    
 @app.post("/scan")
 def write_scan(loaded_layout: ScanState):
     loaded_layout_value = 1 if loaded_layout.state_scan else 0
     try:
-        loaded_layout_str = str(loaded_layout_value)
-        file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/scan.txt"
-        with open(file_path, mode="w+", encoding="utf-8") as file:
-            file.write(loaded_layout_str)
+        inJsonUpdateSpecificData("scan_status",loaded_layout_value)
         return {"success": True}
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="File not found")
@@ -69,10 +66,8 @@ async def send_porte_status(websocket: WebSocket):
     await websocket.accept()
     try:
         while True:
-            with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/porte.txt", mode="r", encoding="utf-8") as file:
-                response = int(file.read())
-                porte_ouverte = response
-                await websocket.send_json({"Porte_Ouverte": porte_ouverte})
+            porte_ouverte = inJsonGetSpecificData("porte")
+            await websocket.send_json({"Porte_Ouverte": porte_ouverte})
             await asyncio.sleep(1)  
     except FileNotFoundError:
         await websocket.close(code=1011, reason="File not found")
@@ -90,11 +85,9 @@ class PorteState(BaseModel):
 def write_porte(porte_state: PorteState):
     porte_ouverte = 1 if porte_state.porte_ouverte else 0
     try:
-        porte_ouverte = str(porte_ouverte)
-        file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/porte.txt"
-        with open(file_path, mode="w+", encoding="utf-8") as file:
-            file.write(porte_ouverte)
-            return {"success": True}
+        porte_ouverte = int(porte_ouverte)
+        inJsonUpdateSpecificData("porte",porte_ouverte)
+        return {"success": True}
     except FileNotFoundError:
         return {"success": False}
     except Exception as e:
@@ -102,9 +95,7 @@ def write_porte(porte_state: PorteState):
     
 @app.get("/porte")
 def read_porte():
-    file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/porte.txt"
-    with open(file_path, mode="r+", encoding="utf-8") as file:
-        result = True if int(file.read()) == 1 else False
+    result = inJsonGetSpecificData("porte")
     return{"porte":bool(result)}
     
 #Le fichier historique indique a qu'elle étape le robot se situe et si il y a un problème, le robot doit agir directement à cette étape
@@ -113,10 +104,8 @@ async def send_historique(websocket:WebSocket):
     await websocket.accept()
     try:
         while True:
-            with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/historique.txt", mode="r", encoding="utf-8") as file:
-                response = int(file.read())
-                historique = response
-                await websocket.send_json({"historique": historique})
+            historique = inJsonGetSpecificData("historique")
+            await websocket.send_json({"historique": historique})
             await asyncio.sleep(1)  
     except FileNotFoundError:
         await websocket.close(code=1011, reason="File not found")
@@ -136,10 +125,8 @@ class HistoriqueData(BaseModel):
 async def write_historique(data: HistoriqueData):
     step_program = data.step_program
     try:
-        step_program = str(step_program)
-        with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/historique.txt", mode="w+", encoding="utf-8") as file:
-            response = file.write(step_program)
-            return True
+        inJsonUpdateSpecificData("historique",step_program)
+        return True
     except FileNotFoundError:
         return False
     except Exception as e:
@@ -153,10 +140,8 @@ async def send_machine_status(websocket:WebSocket):
     await websocket.accept()
     try:
         while True:
-            with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/statemachine.txt", mode="r", encoding="utf-8") as file:
-                response = int(file.read())
-                state_machine = response
-                await websocket.send_json({"state_machine": state_machine})
+            state_machine = inJsonGetSpecificData("statemachine")
+            await websocket.send_json({"state_machine": state_machine})
             await asyncio.sleep(1)  
     except FileNotFoundError:
         await websocket.close(code=1011, reason="File not found")
@@ -176,10 +161,7 @@ class MachineState(BaseModel):
 def write_statemachine(state_machine: MachineState):
     value = 1 if state_machine.state_machine else 0
     try:
-        value = str(value)
-        file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/statemachine.txt"
-        with open(file_path, mode="w+", encoding="utf-8") as file:
-            file.write(value)
+        inJsonUpdateSpecificData("statemachine",value)
         return {"success": True}
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="File not found")
@@ -188,9 +170,7 @@ def write_statemachine(state_machine: MachineState):
     
 @app.get("/statemachine")
 def read_statemachine():
-    file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/statemachine.txt"
-    with open(file_path, mode="r+", encoding="utf-8") as file:
-        result = file.read()
+    result = inJsonGetSpecificData("statemachine")
     return{"state_machine":int(result)}
 
 
@@ -204,12 +184,9 @@ class TimeCycle(BaseModel):
 @app.post("/cycle")
 async def write_cycle(data: TimeCycle):
     time_cycle = data.time_cycle
-    file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/timeCycle.txt"
-    try:
-        time_cycle = str(time_cycle)
-        with open(file_path, mode="w+", encoding="utf-8") as file:
-            response = file.write(time_cycle)
-            return True
+    try: 
+        inJsonUpdateSpecificData("cycle", time_cycle)
+        return True
     except FileNotFoundError:
         return False
     except Exception as e:
@@ -218,8 +195,6 @@ async def write_cycle(data: TimeCycle):
 
 @app.get("/cycle")
 def read_time_cycle():
-    file_path = "C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/timeCycle.txt"
-    with open(file_path, mode="r+", encoding="utf-8") as file:
-        result = file.read()
+    result = inJsonGetSpecificData("cycle")
     return{"time_cycle":int(result)}
 

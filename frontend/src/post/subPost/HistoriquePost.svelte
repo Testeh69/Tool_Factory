@@ -75,5 +75,5 @@
 
 <div class="element">
     <span>Etape du processus selectionné: </span>
-    <input type="number" bind:value={inputValue} class={validated === null ? '' : (validated ? 'green' : 'red')} on:keydown={handleKeyDown} min=0 max=6 required>
+    <input id="historique" type="number" bind:value={inputValue} class={validated === null ? '' : (validated ? 'green' : 'red')} on:keydown={handleKeyDown} min=0 max=6 required>
 </div>
