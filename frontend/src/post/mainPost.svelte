@@ -4,6 +4,7 @@
     import ScanPost from "./subPost/ScanPost.svelte";
     import HistoriquePost from "./subPost/HistoriquePost.svelte";
   import TimePost from "./subPost/TimePost.svelte";
+  import PartsPost from "./subPost/PartsPost.svelte";
 </script>
 
 <style>
@@ -18,6 +19,17 @@
     padding: 40px;
 }
 
+.column_controleur{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.right, .left{
+    display: flex;
+    flex-direction: column;
+}
+
 
 
 </style>
@@ -26,11 +38,18 @@
 <div class= "controle">
     <div class= "window_controleur">
         <h2><span class="title">CONTROLEUR</span></h2>
-        <MachinePost />
-        <PortePost />
-        <ScanPost />
-        <HistoriquePost />
-        <TimePost/>
+        <div class="column_controleur">
+            <div class="left">
+                <MachinePost />
+                <PortePost />
+                <ScanPost />
+                <HistoriquePost />
+            </div>
+            <div class="right">
+                <TimePost/>
+                <PartsPost />
+            </div>
+        </div>
     </div>
  
 </div>

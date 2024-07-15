@@ -54,6 +54,7 @@
         padding: 20px;
         margin: 10px;
         margin-top: 40px;
+        height:82px;
         width: 200px;
         text-align: center;
         background-color: #f0f0f0;

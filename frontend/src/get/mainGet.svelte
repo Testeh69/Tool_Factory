@@ -1,6 +1,7 @@
 <script>
     import Historique from "./subGet/Historique.svelte";
 import Machine from "./subGet/Machine.svelte";
+  import PartsGet from "./subGet/PartsGet.svelte";
     import Porte from "./subGet/Porte.svelte";
     import Scan from "./subGet/Scan.svelte";
 </script>
@@ -26,16 +27,33 @@ import Machine from "./subGet/Machine.svelte";
     color:#ebe8ee
 }
 
+
+.observeur{
+    display: flex;
+    flex-direction: row;
+}
+
+.right, left{
+    display: flex;
+    flex-direction: column;
+}
 </style>
 <div class= "Screen">
     <div class= "window_observeur">
         <div class="title_window">
         <h2><span class="title">OBSERVEUR</span></h2>
         </div>
-        <Machine />
-        <Porte />
-        <Scan />
-        <Historique />
+        <div class="observeur">
+            <div class="left">
+                <Machine />
+                <Porte />
+                <Scan />
+                <Historique />
+            </div>
+            <div class="right">
+                <PartsGet />
+            </div>
+        </div>
     </div>
  
 </div>

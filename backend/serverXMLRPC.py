@@ -3,6 +3,9 @@ import time
 from functionJson import inJsonGetSpecificData, inJsonUpdateSpecificData
 
 """--------------------------------------------POST-----------------------------------------------------------"""
+def sendNbParts(value:int):
+    inJsonUpdateSpecificData("parts",value)
+
 
 def sendStateProgram():
     #update the state of the machine
@@ -12,7 +15,8 @@ def sendStateProgram():
 def sendHistorique(value:int):
     #update the historique parameter
     inJsonUpdateSpecificData("historique",value)
-    
+
+
 def sendCycleProgram():
     #Simulation of the time of the machine that takes to make the parts
     if inJsonGetSpecificData("statemachine") == 1:
@@ -28,6 +32,10 @@ def sendCycleProgram():
   
 
 """--------------------------------------------GET-----------------------------------------------------------"""
+
+
+def getNbParts()->int:
+    return inJsonGetSpecificData("parts")
 
 def getStateProgram()->int:
     #1 The machine work

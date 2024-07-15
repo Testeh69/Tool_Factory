@@ -15,7 +15,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-#Le fichier scan indique si un plan a été chargé dans la gravure
+#La donnée scan indique si un plan a été chargé dans la gravure
 #1 plan chargé
 #0 aucun plan
 
@@ -58,7 +58,7 @@ def write_scan(loaded_layout: ScanState):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
-#Le fichier porte indique si la porte est ouverte
+#La donnée porte indique si la porte est ouverte
 #1 porte ouverte
 #0 porte fermée
 
@@ -98,7 +98,7 @@ def read_porte():
     result = inJsonGetSpecificData("porte")
     return{"porte":bool(result)}
     
-#Le fichier historique indique a qu'elle étape le robot se situe et si il y a un problème, le robot doit agir directement à cette étape
+#Le donnée historique indique a qu'elle étape le robot se situe et si il y a un problème, le robot doit agir directement à cette étape
 #0 à 6
 async def send_historique(websocket:WebSocket):
     await websocket.accept()
@@ -132,7 +132,7 @@ async def write_historique(data: HistoriqueData):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-# Le fichier state machine indique si la machine effectue un programme ou est en pause
+# La donnée statemachine indique si la machine effectue un programme ou est en pause
 #1 Programme en cours
 #0 Machine en pause
 
@@ -174,7 +174,7 @@ def read_statemachine():
     return{"state_machine":int(result)}
 
 
-#Le fichier timecycle indique le temps de cycle de la machine
+#La donnée cycle indique le temps de cycle de la machine
 #1 to 60
 
 
@@ -196,5 +196,48 @@ async def write_cycle(data: TimeCycle):
 @app.get("/cycle")
 def read_time_cycle():
     result = inJsonGetSpecificData("cycle")
-    return{"time_cycle":int(result)}
+    return{"time_cycle":inJsonGetSpecificData("cycle")}
 
+
+#La donnée parts indique le nombre de pièce qui a été chargée dans la graveuse
+#0 to 4 parts
+
+class NumberParts(BaseModel):
+    number_parts:int
+
+@app.post("/parts")
+def write_number_parts(data:NumberParts):
+    result = data.number_parts
+    try:
+        inJsonUpdateSpecificData("parts", result)
+        return True
+    except FileNotFoundError:
+        return False
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+
+@app.get("/parts")
+def read_number_parts():
+    result = inJsonGetSpecificData("parts")
+    return {"number_parts": int(result)}
+
+
+async def send_parts(websocket:WebSocket):
+    await websocket.accept()
+    try:
+        while True:
+            number_parts = inJsonGetSpecificData("parts")
+            await websocket.send_json({"number_parts": number_parts})
+            await asyncio.sleep(1)  
+    except FileNotFoundError:
+        await websocket.close(code=1011, reason="File not found")
+    except Exception as e:
+        await websocket.close(code=1011, reason=str(e))
+
+
+
+@app.websocket("/parts")
+async def websocket_parts(websocket:WebSocket):
+    await send_parts(websocket)

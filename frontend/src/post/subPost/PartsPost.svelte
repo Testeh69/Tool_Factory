@@ -1,9 +1,9 @@
 <script>
     import { onMount, onDestroy } from 'svelte';
-    let url = "http://127.0.0.1:8081/cycle"
-    let timeCycle = '0';
+    let url = "http://127.0.0.1:8081/parts"
+    let nbParts = '0';
     let validated = null;
-    let timeCycleGet;
+    let nbPartsGet;
     let interval;
 
     async function fetchData() {
@@ -13,7 +13,7 @@
         throw new Error(`Response status: ${response.status}`);
         }
         const json = await response.json();
-        timeCycleGet =  json.time_cycle
+        nbPartsGet =  json.number_parts
         
     } catch (error) {
         console.error(error.message);
@@ -28,7 +28,7 @@
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ time_cycle: timeCycle })
+                body: JSON.stringify({ number_parts: nbParts })
             });
 
             if (!response.ok) {
@@ -46,8 +46,8 @@
 
     function handleKeyDown(event) {
         if (event.key === "Enter") {
-            if (timeCycle > 60){
-                timeCycle = 60
+            if (nbParts > 4){
+                nbParts = 4
             }
             postData();
         }
@@ -101,6 +101,6 @@
 </style>
 
 <div class="element">
-    <span>Temps de Cycle actuel: {timeCycleGet} s </span>
-    <input id = "time_cycle" type="number" bind:value={timeCycle} class={validated === null ? '' : (validated ? 'green' : 'red')} on:keydown={handleKeyDown} min=0 max=60 required>
+    <span>Nombre de pièces dans la machine:  </span>
+    <input id = "parts" type="number" bind:value={nbParts} class={validated === null ? '' : (validated ? 'green' : 'red')} on:keydown={handleKeyDown} min=0 max=4 required>
 </div>

@@ -1,7 +1,8 @@
 {
     "statemachine": 0,
     "porte": 1,
-    "scan_status": 1,
-    "historique": 6,
-    "cycle": 3
+    "scan_status": 0,
+    "historique": 5,
+    "cycle": 3,
+    "parts": 4
 }

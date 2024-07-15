@@ -34,14 +34,16 @@
 <style>
     .porte {
         border: 1px solid #ccc;
-            padding: 20px;
-            color: rgb(40, 2, 40);
-            margin: 10px;
-            margin-top: 40px;
-            width: 200px;
-            text-align: center;
-            background-color: #f0f0f0;
-            border-radius: 8px;
+        color: rgb(40, 2, 40);
+        padding: 20px;
+        margin: 10px;
+        margin-top: 40px;
+        width: 200px;
+        text-align: center;
+        background-color: #f0f0f0;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
     }
 
     .light_state_porte {
