@@ -1,58 +1,54 @@
 from xmlrpc.server import SimpleXMLRPCServer
-#import fetchImage
 import time
+from functionJson import inJsonGetSpecificData, inJsonUpdateSpecificData
 
 """--------------------------------------------POST-----------------------------------------------------------"""
 
 def sendStateProgram():
-    with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/statemachine.txt",mode = "w+", encoding="utf-8") as file:
-        file.write(str(1))
-
+    #update the state of the machine
+    inJsonUpdateSpecificData("statemachine",1)
+    
 def sendHistorique(value:int):
-    with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/historique.txt",mode = "w+", encoding="utf-8") as file:
-        file.write(str(value))
+    #update the historique parameter
+    inJsonUpdateSpecificData("historique",value)
     
 def sendCycleProgram():
-    print("Programme en Cours")
-    with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/statemachine.txt",mode = "r+", encoding="utf-8") as file:
-        cycle = file.read()
-    if isinstance(cycle,int):
-        cycle = int(cycle)
+    #Simulation of the time of the machine that takes to make the parts
+    if inJsonGetSpecificData("statemachine") == 1:
+        print("Programme en Cours")
+        cycle = inJsonGetSpecificData("cycle")
+        if not isinstance(cycle,int):
+            cycle = 2
+        time.sleep(cycle)
+        print('Programme Finis')
+        inJsonUpdateSpecificData("statemachine",0)
     else:
-        cycle = 2
-    time.sleep(cycle)
-    print('Programme Finis')
-    with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/statemachine.txt",mode = "w+", encoding="utf-8") as file:
-        file.write(str(0))
+        return "Error"
+  
 
 """--------------------------------------------GET-----------------------------------------------------------"""
 
-def getStateProgram():
-    with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/statemachine.txt",mode = "r", encoding="utf-8") as file:
-        x = file.read()
-    return int(x)
+def getStateProgram()->int:
+    #1 The machine work
+    #0 The machine is in sleep
+    return inJsonGetSpecificData("statemachine")
 
 
-def getHistorique():
-    with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/historique.txt",mode = "r", encoding="utf-8") as file:
-        x = file.read()
-    return int(x)
+def getHistorique()->int:
+    #1 to .... depending on the branch of the program the universal robot has failed
+    return inJsonGetSpecificData("historique")
 
 
 
-def getStatePorte():
+def getStatePorte()->int:
     #1 Porte Ouverte 
     #0 Porte Fermée
-    with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/porte.txt",mode = "r", encoding="utf-8") as file:
-        x = file.read()
-    return int(x)
+    return inJsonGetSpecificData("porte")
 
-def getScan():
+def getScan()->int:
     #1 Plan chargée 
     #0 Aucun plan
-    with open("C:/Users/Orefice/OneDrive/Bureau/IT/URSAFRAN/ToolFactory/backend/fichier_gravure_simulation/scan.txt",mode = "r", encoding="utf-8") as file:
-        x = file.read()
-    return int(x)
+    return inJsonGetSpecificData("scan_status")
 
 
 
