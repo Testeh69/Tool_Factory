@@ -6,6 +6,7 @@ from functionJson import inJsonGetSpecificData, inJsonUpdateSpecificData
 
 def sendStateProgram():
     #update the state of the machine
+    inJsonUpdateSpecificData("porte",0)
     inJsonUpdateSpecificData("statemachine",1)
     
 def sendHistorique(value:int):
@@ -22,8 +23,8 @@ def sendCycleProgram():
         time.sleep(cycle)
         print('Programme Finis')
         inJsonUpdateSpecificData("statemachine",0)
-    else:
-        return "Error"
+        inJsonUpdateSpecificData("porte",1)
+
   
 
 """--------------------------------------------GET-----------------------------------------------------------"""
@@ -48,7 +49,7 @@ def getStatePorte()->int:
 def getScan()->int:
     #1 Plan chargée 
     #0 Aucun plan
-    return inJsonGetSpecificData("scan_status")
+    return int(inJsonGetSpecificData("scan_status"))
 
 
 
