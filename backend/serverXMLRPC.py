@@ -69,5 +69,5 @@ server.register_function(getStateProgram, "getState")
 server.register_function(getStatePorte, "getPorte")
 server.register_function(getHistorique, "getHistorique")
 server.register_function(sendHistorique, "sendHistorique")
-
+server.register_function(getNbParts, "getParts")
 server.serve_forever()
