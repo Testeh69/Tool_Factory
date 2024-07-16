@@ -1,13 +1,109 @@
 <script lang="ts">
-export let name:String;
-export let endpoint:String;
-</script>
-<style lang="scss">
+    import { onMount, onDestroy } from 'svelte';
 
+    export let name: string;
+    export let endpoint: string;
+    export let json: string;
+    export let urlWebSocket: string;
+    let socket: WebSocket | null = null; 
+    let dataAPI: number ; 
+
+    onMount(() => {
+        if (window.WebSocket) {
+            socket = new WebSocket(`${urlWebSocket}${endpoint}`);
+
+            socket.onopen = (event) => {
+                console.log("Connected to the WebSocket server");
+            };
+
+            socket.onmessage = (event) => {
+                const message = JSON.parse(event.data);
+                dataAPI = message[json]
+                console.log(message)
+                console.log(message["number_parts"])
+    
+            };
+
+            socket.onerror = (error) => {
+                console.error('WebSocket connection error:', error);
+            };
+
+            socket.onclose = (event) => {
+                console.log('Disconnected from the WebSocket server');
+            };
+        } else {
+            console.log('WebSockets are not supported in this browser.');
+        }
+    });
+
+    onDestroy(() => {
+        if (socket) {
+            socket.close(); // Close WebSocket connection when component is unmounted
+        }
+    });
+</script>
+
+<style lang="scss">
+    .element__obs {
+    margin: 5px;
+    padding: 10px;
+    display: flex; 
+    align-items: center; 
+    flex-direction: row;
+    .column_title{
+        display: flex;
+        flex-direction: column;
+        background-color: yellow;
+        margin-right: 20px;
+    }
+    .column_data{
+        background-color: white;
+        width: 30px;
+        height:30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
+
+        .rouge{
+            height:100%;
+            width:100%;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: red;
+        }
+
+        .verte{
+            background-color: green;
+            height:100%;
+            width:100%;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        }
+    
+}
+
+  
 </style>
+
 <div class="element__obs">
-    <span>{name}</span>
-    <div class="light">
-        {endpoint}
+    <div class="column_title">
+    <span class="name">{name}</span>
+    </div>
+    <div class="column_data">
+    {#if name !== "Temps de cycle" && name !== "nombre de pièces" && name !== "Numéro de l'étape"}
+        <div class="light {dataAPI === 1 ? "verte":"rouge"}">
+           {dataAPI}
+        </div>
+    {:else}
+        <div class="actualité">
+            <span>{dataAPI}</span>
+        </div>
+    {/if}
     </div>
 </div>
