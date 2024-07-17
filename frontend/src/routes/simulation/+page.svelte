@@ -10,7 +10,7 @@ interface urlObject {
 
 const urlObject : urlObject = {
   urlWebSocket: "ws://127.0.0.1:8081",
-  urlApi:"http://127.0.0.1:8001"
+  urlApi:"http://127.0.0.1:8081"
 }
 
 
@@ -22,16 +22,16 @@ interface Actionneur{
 
 const objActionneurToggle: Actionneur = {
     listNameAct:[
-                "Charger le programme",
-                "Bouger la porte",
-                "Affecter le programme",],
+                "Charger/Supprimer un plan",
+                "Fermer/Ouvrir la porte",
+                "Allumer/Eteindre la gravure",],
     listNameEndPoint:[
                 "/scan",
                 "/porte",
                 "/statemachine"],
     listNameJson:[
-            "scan_status",
-            "Porte_Ouverte",
+            "state_scan",
+            "porte_ouverte",
             "state_machine"
     ]
 }
@@ -149,7 +149,9 @@ const objObservateur: Observateur = {
                     name = {act}
                     endpoint = {objActionneurToggle.listNameEndPoint[index]}
                     json = {objActionneurToggle.listNameJson[index]}
+                    jsonObs = {objObservateur.listNameJson[index]}
                     urlApi = {urlObject.urlApi}
+
                     />
                 {/each}
             </div>

@@ -19,8 +19,6 @@
             socket.onmessage = (event) => {
                 const message = JSON.parse(event.data);
                 dataAPI = message[json]
-                console.log(message)
-                console.log(message["number_parts"])
     
             };
 

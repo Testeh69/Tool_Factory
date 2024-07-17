@@ -42,7 +42,7 @@ async def websocket_scan(websocket:WebSocket):
 @app.get("/scan")
 def read_scan():
     result = inJsonGetSpecificData("scan_status")
-    return{"scan":int(result)}
+    return{"scan_status":int(result)}
 
 class ScanState(BaseModel):
     state_scan:bool   
@@ -96,7 +96,7 @@ def write_porte(porte_state: PorteState):
 @app.get("/porte")
 def read_porte():
     result = inJsonGetSpecificData("porte")
-    return{"porte":bool(result)}
+    return{"Porte_Ouverte":int(result)}
     
 #Le donnée historique indique a qu'elle étape le robot se situe et si il y a un problème, le robot doit agir directement à cette étape
 #0 à 6
