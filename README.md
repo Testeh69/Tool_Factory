@@ -16,3 +16,9 @@ Version 1.0:
 Version 1.1:
 
 ![image](https://github.com/user-attachments/assets/1c2e51cd-d82c-4581-af1f-c5e9c5474e88)
+
+
+The branch typescript is a refactoring of the ToolFactory app
+
+
+using sveltekit, typescript, scss and python with fastapi.
