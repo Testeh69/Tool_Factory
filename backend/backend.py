@@ -24,7 +24,6 @@ async def send_scan_status(websocket:WebSocket):
     try:
         while True:
             scan_status = inJsonGetSpecificData("scan_status")
-            
             await websocket.send_json({"scan_status": scan_status})
             await asyncio.sleep(1)          
     except FileNotFoundError:
@@ -191,7 +190,23 @@ async def write_cycle(data: TimeCycle):
         return False
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+async def send_time_cycle(websocket:WebSocket):
+    await websocket.accept()
+    try:
+        while True:
+            time_cycle = inJsonGetSpecificData("cycle")
+            await websocket.send_json({"time_cycle": time_cycle})
+            await asyncio.sleep(1)  
+    except FileNotFoundError:
+        await websocket.close(code=1011, reason="File not found")
+    except Exception as e:
+        await websocket.close(code=1011, reason=str(e))
 
+
+@app.websocket("/cycle")
+async def websocket_time_cycle(websocket:WebSocket):
+    await send_time_cycle(websocket)
 
 @app.get("/cycle")
 def read_time_cycle():

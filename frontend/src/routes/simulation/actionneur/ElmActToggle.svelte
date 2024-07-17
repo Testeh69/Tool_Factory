@@ -17,7 +17,6 @@
             }
             const json = await response.json()
             toggle_state = json[jsonObs];
-            console.log(jsonObs,json[jsonObs])
         }
         catch(error){
             if(error instanceof Error){

@@ -8,10 +8,13 @@ interface urlObject {
   urlApi:string;
 }
 
-const urlObject : urlObject = {
+const urlObject: urlObject = {
   urlWebSocket: "ws://127.0.0.1:8081",
   urlApi:"http://127.0.0.1:8081"
 }
+
+
+
 
 
 interface Actionneur{
@@ -20,11 +23,30 @@ interface Actionneur{
     listNameJson: string[]  
 }
 
+
+const objActionneurInput: Actionneur = {
+    listNameAct:[
+        "Sélectionner l'étape du programme",
+        "Sélectionner le nombre de pièce chargé",
+        "Sélectionner le temps de cycle de la machine"
+    ],
+    listNameEndPoint:[
+        "/historique",
+        "/parts",
+        "/cycle"
+    ],
+    listNameJson:[
+        "step_program",
+        "number_parts",
+        "time_cycle"
+    ]
+}
+
 const objActionneurToggle: Actionneur = {
     listNameAct:[
                 "Charger/Supprimer un plan",
                 "Fermer/Ouvrir la porte",
-                "Allumer/Eteindre la gravure",],
+                "Allumer/Eteindre la gravure"],
     listNameEndPoint:[
                 "/scan",
                 "/porte",
@@ -48,19 +70,22 @@ const objObservateur: Observateur = {
                 "Etat de la porte",
                 "Etat de la machine",
                 "Numéro de l'étape",
-                "nombre de pièces"
+                "nombre de pièces",
+                "Temps de cycle"
                 ],
     listNameEndPoint:["/scan",
                 "/porte",
                 "/statemachine",
                 "/historique",
-                "/parts"
+                "/parts",
+                "/cycle"
     ],
     listNameJson: ["scan_status",
                 "Porte_Ouverte",
                 "state_machine",
                 "historique",
-                "number_parts"
+                "number_parts",
+                "time_cycle"
     ]
 
 }
@@ -151,12 +176,18 @@ const objObservateur: Observateur = {
                     json = {objActionneurToggle.listNameJson[index]}
                     jsonObs = {objObservateur.listNameJson[index]}
                     urlApi = {urlObject.urlApi}
-
                     />
                 {/each}
             </div>
             <div class="actionneur__input">
-
+                {#each objActionneurInput.listNameAct as act,index}
+                    <ElmActInput
+                        name = {act}
+                        endpoint = {objActionneurInput.listNameEndPoint[index]}
+                        json = {objActionneurInput.listNameJson[index]}
+                        urlApi = {urlObject.urlApi}
+                    />
+                {/each}
             </div>
         </div>
     </section>
