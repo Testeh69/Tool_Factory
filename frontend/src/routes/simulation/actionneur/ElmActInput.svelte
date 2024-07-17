@@ -33,20 +33,29 @@
     function sendValue(event: KeyboardEvent) {
     if (event.key === "Enter") {
         if (endpoint === "/historique") {
-            if (value > 6 || value < 0) {
+            if (value > 6 ) {
+                value = 6;
+            }
+            else if (value < 0){
                 value = 0;
             }
         }
 
-        else if (endpoint === "/number_parts"){
-            if (value > 4 ||value < 0){
+        else if (endpoint === "/parts"){
+            if (value > 4 ){
+                value = 4
+            }
+            else if (value <0){
                 value = 0
             }
         }
 
-        else if (endpoint === "time_cycle"){
-            if (value> 1000 || value < 0){
-                value = 10
+        else if (endpoint === "/cycle"){
+            if (value> 1000){
+                value = 40
+            }
+            else if (value <0){
+                value = 4
             }
         }
         postData(urlApi, endpoint, json, value).catch(console.error);
@@ -82,11 +91,11 @@
     <span>{name}</span>
     <div class="value_selection {validated === null ? "": (validated ? "green":"red")}">
         {#if endpoint === "/historique"}
-            <input type="number" min="0" max="6" bind:value={value} required on:keydown={sendValue}>
+            <input type="number" id = {name} min="0" max="6" bind:value={value} required on:keydown={sendValue}>
         {:else if endpoint === "/parts"}
-            <input type="number" min="0" max="4" bind:value={value} required on:keydown={sendValue}>
+            <input type="number" id = {name} min="0" max="4" bind:value={value} required on:keydown={sendValue}>
         {:else if endpoint === "/cycle"}
-            <input type="number" min="0" max="40" bind:value={value} required on:keydown={sendValue}>
+            <input type="number" id = {name} min="0" max="40" bind:value={value} required on:keydown={sendValue}>
         {/if}
     </div>
 </div>

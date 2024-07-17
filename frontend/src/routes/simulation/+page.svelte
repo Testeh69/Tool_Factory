@@ -67,8 +67,8 @@ interface Observateur {
 
 const objObservateur: Observateur = {
     listNameObs:["Programme",
-                "Etat de la porte",
-                "Etat de la machine",
+                "Porte",
+                "Machine",
                 "Numéro de l'étape",
                 "nombre de pièces",
                 "Temps de cycle"

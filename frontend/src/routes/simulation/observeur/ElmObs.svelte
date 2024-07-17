@@ -74,7 +74,7 @@
         }
 
         .verte{
-            background-color: green;
+            background-color: greenyellow;
             height:100%;
             width:100%;
             border-radius: 20px;
@@ -91,12 +91,19 @@
 
 <div class="element__obs">
     <div class="column_title">
+    {#if name === "Programme"}
+    <span class="name">{dataAPI ? "Plan Chargé":"Vide"}</span>
+    {:else if name === "Porte"}
+    <span class="name">{dataAPI ? "Porte Ouverte": "Porte Fermée"}</span>
+    {:else if name ==="Machine"}
+    <span class="name">{dataAPI? "Machine en cours" :"Machine en Pause"}</span>
+    {:else}
     <span class="name">{name}</span>
+    {/if}
     </div>
     <div class="column_data">
     {#if name !== "Temps de cycle" && name !== "nombre de pièces" && name !== "Numéro de l'étape"}
         <div class="light {dataAPI === 1 ? "verte":"rouge"}">
-           {dataAPI}
         </div>
     {:else}
         <div class="actualité">

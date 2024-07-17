@@ -1,8 +1,8 @@
 {
     "scan_status": 0,
     "porte": 0,
-    "statemachine": 0,
+    "statemachine": 1,
     "historique": 0,
-    "parts": 78,
-    "cycle": 45
+    "parts": 4,
+    "cycle": 10
 }
