@@ -74,11 +74,12 @@
         margin-top: 34px;
         margin-bottom: 34px;
         height: 50px;
-    
         .value_selection{
             margin-top: 10px;
             border-radius: 7px;
         input[type = number]{
+            height:21px;
+            width: 80px;
             border-radius: 7px;
             text-align: center;
         }}

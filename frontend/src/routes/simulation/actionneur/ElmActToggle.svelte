@@ -78,6 +78,9 @@
     flex-direction: column;
     margin-top: 50px;
     height:20%;
+    span{
+        text-align: center;
+    }
     .toggle{
         border-radius: 15px;
         border:solid 1px black;
