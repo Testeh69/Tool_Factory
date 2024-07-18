@@ -9,7 +9,7 @@ if not os.path.exists(brave_path):
     raise FileNotFoundError(f"Brave executable not found at {brave_path}")
 
 # URL à ouvrir
-url:str = "http://localhost:8080/"
+url:str = "http://localhost:5173/"
 
 # Ouvrir Brave avec l'URL spécifiée
 subprocess.Popen([brave_path, url])
