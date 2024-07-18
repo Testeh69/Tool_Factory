@@ -3,6 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 import asyncio
 from pydantic import BaseModel
 from functionJson import inJsonGetSpecificData, inJsonUpdateSpecificData
+from variable import HIP, PORT
+import socket
+import time
 
 app = FastAPI()
 
@@ -256,3 +259,87 @@ async def send_parts(websocket:WebSocket):
 @app.websocket("/parts")
 async def websocket_parts(websocket:WebSocket):
     await send_parts(websocket)
+
+
+
+"""-------------------------------------API POUR SOCKET----------------------------------------------------------------"""
+
+
+
+
+#API pour obtenir le statut du robot, pour savoir si il est en marche ou en pause
+
+
+
+
+@app.get("/status")
+def getRobotStatus():
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
+            client_socket.connect((HIP, PORT))
+            client_socket.send("robotmode\n".encode())
+            time.sleep(1)
+            response = client_socket.recv(4096).decode()
+    except ConnectionError as e:
+        print(f"error => {e}")
+    return {"status_robot": response}
+
+
+#API POWER ON
+#on => power on and brake release
+#off => powwwwwwer off
+class RobotPower:
+    robot_power:str
+
+@app.post("/power")
+def power_robot(power:RobotPower):
+    result = power.robot_power#robot_power for key in json
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
+            client_socket.connect((HIP,PORT))
+            if result == "on":
+                client_socket.send("power on\n".encode())
+                time.sleep(3)
+                client_socket.send("brake release\n".encode())
+            elif result == "off":
+                client_socket.send("power off\n".encode())
+    except Exception as e:
+        print(f"Error => {e}")
+
+
+#API to Load the program
+
+
+class NameProgram:
+    name_program:str
+
+@app.post("/program")
+def loading_program(load_program:RobotPower):
+    result = load_program.loading#loading for key in json
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
+            client_socket.connect((HIP,PORT))
+            client_socket.send((f"load {result}"+ "\n"))
+            time.sleep(10)
+    except Exception as e:
+        print(f"Error => {e}")
+
+
+
+#API to play the program loaded
+
+
+class LaunchProgram:
+    launch_program:str
+
+@app.post("/program")
+def loading_program(launch:LaunchProgram):
+    result = launch.program#loading for key in json
+    try:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
+            client_socket.connect((HIP,PORT))
+            if result == "1":
+                client_socket.send((f"play"+ "\n"))
+            time.sleep(10)
+    except Exception as e:
+        print(f"Error => {e}")

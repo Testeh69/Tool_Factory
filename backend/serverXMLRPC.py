@@ -4,6 +4,7 @@ from functionJson import inJsonGetSpecificData, inJsonUpdateSpecificData
 
 """--------------------------------------------POST-----------------------------------------------------------"""
 def sendNbParts(value:int):
+    #sendTheNumberOf parts that the robots have loaded
     inJsonUpdateSpecificData("parts",value)
 
 
