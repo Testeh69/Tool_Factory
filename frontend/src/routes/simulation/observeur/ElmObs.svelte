@@ -42,48 +42,67 @@
 </script>
 
 <style lang="scss">
-    .element__obs {
-    margin: 5px;
-    padding: 10px;
-    display: flex; 
-    align-items: center; 
-    flex-direction: row;
+   .element__obs{
+    font-size: 9px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 5px;
+    background: rgb(0,22,250);
+    background: linear-gradient(120deg, rgba(0,22,250,1) 0%, rgb(79, 94, 215) 50%, rgba(6,161,254,1) 75%);            
+    height:40%;
+    width: 100%;
+    border: solid 1px black;
+    box-shadow: 1px 1px 1px;
+    
     .column_title{
-        display: flex;
+        height:50%;
+        display:flex;
         flex-direction: column;
-        background-color: yellow;
-        margin-right: 20px;
-    }
-    .column_data{
-        background-color: white;
-        width: 30px;
-        height:30px;
-        display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 20px;
-
-        .rouge{
-            height:100%;
-            width:100%;
-            border-radius: 20px;
+        width: 100%;;
+    }
+    .column_data{
+        height:50%;
+        width:100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 3px;
+        .actualité{
+            font-size: 20px;
+        }
+        .border{
+            background:linear-gradient(to bottom left,#222328,#a2a8ba);
+            height:25px;
+            width: 25px;
+            box-shadow: 1px 1px 1px;
+            border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: red;
+            .light{
+                background: linear-gradient(to bottom left,#e7e7e2,#e8f004);
+                height:80%;
+                width:80%;
+                border-radius: 15px;
+                border: solid 1px;
+            }
+            .rouge{
+                background: radial-gradient(circle,#ffcc66,#cc0000);
+            }
+            .verte{
+                background: radial-gradient(circle,#66ff66,#009933);
+                
+            }
+            
         }
+    }
 
-        .verte{
-            background-color: greenyellow;
-            height:100%;
-            width:100%;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        }
-    
 }
 
   
@@ -102,13 +121,21 @@
     {/if}
     </div>
     <div class="column_data">
-    {#if name !== "Temps de cycle" && name !== "nombre de pièces" && name !== "Numéro de l'étape"}
-        <div class="light {dataAPI === 1 ? "verte":"rouge"}">
+    {#if name !== "Temps de cycle" && name !== "Nombre de pièces" && name !== "Numéro de l'étape"}
+        <div class="border">
+            <div class="light {dataAPI === 1 ? "verte":"rouge"}">
+            </div>
         </div>
     {:else}
-        <div class="actualité">
-            <span>{dataAPI}</span>
-        </div>
+        {#if name === "Temps de cycle"}
+            <div class="actualité">
+                <span>{dataAPI}s</span>
+            </div>
+        {:else}
+            <div class="actualité">
+                <span>{dataAPI}</span>
+            </div>
+        {/if}
     {/if}
     </div>
 </div>

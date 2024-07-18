@@ -4,20 +4,26 @@
 </script>
 <style lang="scss">
     .menu{
+
         position: absolute;
+        left:1%;
         top:25%;
         height:60vh;
         display: flex;
         flex-direction: column;
 
         .nav__bar{
+            border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            background-color: red;
+            background: rgb(0,22,250);
+            background: linear-gradient(120deg, rgba(0,22,250,1) 0%, rgb(79, 94, 215) 50%, rgba(6,161,254,1) 75%);            
             width:50px;
             height: 80%;
+            box-shadow: 2px 2px 2px;
+            border: solid;
           
                 img{
                     margin: 20px;

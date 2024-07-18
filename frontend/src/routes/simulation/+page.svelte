@@ -70,7 +70,7 @@ const objObservateur: Observateur = {
                 "Porte",
                 "Machine",
                 "Numéro de l'étape",
-                "nombre de pièces",
+                "Nombre de pièces",
                 "Temps de cycle"
                 ],
     listNameEndPoint:["/scan",
@@ -93,67 +93,80 @@ const objObservateur: Observateur = {
 </script>
 <style lang="scss">
 
+// <uniquifier>: Use a unique and descriptive class name
+// <weight>: Use a value from 100 to 900
 
 .section__virtualisation{
+    color: #f7f7f7;
+    font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
     display: flex;
     flex-direction: row;
-
-.observeur__section{
-    margin-left: 100px;
-    margin-top: 10vh;
-    background-color: yellow;
-    height:80vh;
-    width: 20vw;
-    display: flex;
-    flex-direction: column;
+    background-color: #D9AFD9;
+    background-image: linear-gradient(0deg, #807eff 0%, #97D9E1 100%);
+    justify-content: space-evenly;
     align-items: center;
-    .title{
-        display: flex;
-        text-align: center;
-        width: 100%;
-        background-color: red;
-        padding-top: 20px;
-        align-items: center;
-        justify-content: center;
-    }
-    .observeur{
-        background-color: green;
+    height:100vh;
+    .observeur__section{
+        width:30vw;
         display: flex;
         flex-direction: column;
-        width: 100%;
-        height:100%;
-        align-items: center;
-        justify-content: space-evenly;
-    }
-}
-.actionneur__section{
-    margin-left: 100px;
-    margin-top: 10vh;
-    background-color: yellow;
-    height:80vh;
-    width: 20vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    .title{
-        display: flex;
-        text-align: center;
-        width: 100%;
-        background-color: red;
-        padding-top: 20px;
         align-items: center;
         justify-content: center;
+        background:linear-gradient(to bottom left,#222328,#a2a8ba);
+        height:70vh;
+        border-radius: 15px;
+        border: solid 1px black;
+        box-shadow: 3px 2px 2px black;
+        .title{
+            font-weight: bold;
+        }
+        .observeur{
+            display: grid;
+            grid-template-columns: auto auto ;
+            font-size: 12px;
+            width: 93%;
+            height:90%;
+            align-items: center;
+            border: solid;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: space-evenly;
+        }
     }
-
-}
-
+    .actionneur__section{
+        width:40vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background:linear-gradient(to bottom left,#222328,#a2a8ba);
+        height:70vh;
+        border-radius: 15px;
+        border: solid 1px black;
+        box-shadow: 3px 2px 2px black;
+        .title{
+            font-weight: bold;
+        }
+        .actionneur{
+            display: grid;
+            grid-template-columns: auto auto;
+            width: 90%;
+            height:90%;
+            align-items: center;
+            border-radius: 10px;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+    }
 }
 
 
 </style>
 <section class="section__virtualisation">
     <section class="observeur__section">
-        <span class="title">Observeur</span>
+        <span class="title">OBSERVEUR</span>
         <div class="observeur">
             {#each objObservateur.listNameObs as obs, index}
                 <ElmObs 
@@ -166,7 +179,7 @@ const objObservateur: Observateur = {
         </div>
     </section>
     <section class="actionneur__section">
-        <span class="title">Actionneur</span>
+        <span class="title">ACTIONNEUR</span>
         <div class="actionneur">
             <div class="actionneur__toggle">
                 {#each objActionneurToggle.listNameAct as act, index}

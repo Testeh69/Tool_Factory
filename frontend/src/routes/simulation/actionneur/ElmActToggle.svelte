@@ -76,22 +76,35 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: brown;
-    margin-top: 20px;
-    height:50px;
+    margin-top: 50px;
+    height:20%;
     .toggle{
-        padding-top: 5px;
-        .btn__toggle{        
+        border-radius: 15px;
+        border:solid 1px black;
+        box-shadow: 1px 1px 1px;
+        margin-top: 7px;
+        margin-bottom: 7px;
+        width:60%;
+        background: rgb(0,22,250);
+        background: linear-gradient(100deg, rgba(0,22,250,1) 10%, rgb(79, 94, 215) 50%, rgba(6,161,254,1) 75%);                   
+        .btn__toggle{ 
+            position: relative;      
             border-radius: 20px;
-            width:20px;
-            height:20px;
+            width:30px;
+            height:30px;
+            transition: left 0.3s;
+            background-color: #D9AFD9;
+            background-image: linear-gradient(120deg, #D9AFD9 0%, #97D9E1 100%);
+
         }
-        .green{
-                background-color: greenyellow;
-            }
-        .red{
-                background-color: red;
-            }
+        .play{
+            left:calc(100% - 30px);
+            background: radial-gradient(circle,#66ff66,#009933);
+        }
+        .pause{
+                left: 0;
+                background: radial-gradient(circle,#ffcc66,#cc0000);
+        }
     }
 
 }
@@ -103,6 +116,6 @@
 <div class="element__actionneur__toggle">
     <span>{name}</span>
     <div class="toggle">
-        <button class= "btn__toggle {toggle_state === 1 ? "green": "red"}" on:click = {handleChangeState}></button>
+        <button class= "btn__toggle {toggle_state === 1 ? "play": "pause"}" on:click = {handleChangeState}></button>
     </div>
 </div>

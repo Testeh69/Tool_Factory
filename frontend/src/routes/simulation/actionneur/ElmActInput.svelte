@@ -68,21 +68,29 @@
         font-size: 12px;
         font-weight: bold;
         display: flex;
-        justify-content: center;
+        justify-content: space-evenly;
         align-items: center;
+        text-align: center;
         flex-direction: column;
-        background-color: brown;
-        margin-top: 20px;
+        margin-top: 34px;
+        margin-bottom: 34px;
         height: 50px;
-
+    
+        .value_selection{
+            margin-top: 10px;
+            border-radius: 7px;
+        input[type = number]{
+            border-radius: 7px;
+            text-align: center;
+        }}
         .green {
-        border: solid;
-        border-color: rgb(62, 229, 62);
+        border: solid 2px;
+        border-color: #66ff66;
     }
 
     .red {
-        border: solid;
-        border-color: rgb(227, 37, 37);
+        border: solid 2px;
+        border-color: #cc0000;
     }
     }
 </style>
