@@ -2,26 +2,16 @@
 import ElmObs from "./observeur/ElmObs.svelte";
 import ElmActToggle from "./actionneur/ElmActToggle.svelte";
 import ElmActInput from "./actionneur/ElmActInput.svelte";
+import {fly} from "svelte/transition"
+import type { urlObject, Actionneur, Observateur } from './types'; 
 
-interface urlObject {
-  urlWebSocket:string;
-  urlApi:string;
-}
+
 
 const urlObject: urlObject = {
   urlWebSocket: "ws://127.0.0.1:8081",
   urlApi:"http://127.0.0.1:8081"
 }
 
-
-
-
-
-interface Actionneur{
-    listNameAct: string[],
-    listNameEndPoint: string[],
-    listNameJson: string[]  
-}
 
 
 const objActionneurInput: Actionneur = {
@@ -58,11 +48,6 @@ const objActionneurToggle: Actionneur = {
     ]
 }
 
-interface Observateur {
-    listNameObs: string[],
-    listNameEndPoint: string[],
-    listNameJson: string[]       
-} 
 
 
 const objObservateur: Observateur = {
@@ -93,14 +78,12 @@ const objObservateur: Observateur = {
 </script>
 <style lang="scss">
 
-// <uniquifier>: Use a unique and descriptive class name
-// <weight>: Use a value from 100 to 900
 
 .section__virtualisation{
     color: #f7f7f7;
     font-family: "Montserrat", sans-serif;
-  font-optical-sizing: auto;
-  font-style: normal;
+    font-optical-sizing: auto;
+    font-style: normal;
     display: flex;
     flex-direction: row;
     background-color: #D9AFD9;
@@ -129,8 +112,6 @@ const objObservateur: Observateur = {
             width: 93%;
             height:90%;
             align-items: center;
-            border: solid;
-            border-radius: 10px;
             align-items: center;
             justify-content: space-evenly;
         }
@@ -164,8 +145,8 @@ const objObservateur: Observateur = {
 
 
 </style>
-<section class="section__virtualisation">
-    <section class="observeur__section">
+<section class="section__virtualisation" >
+    <section class="observeur__section" transition:fly = {{y:200, duration:1000}}>
         <span class="title">OBSERVEUR</span>
         <div class="observeur">
             {#each objObservateur.listNameObs as obs, index}
@@ -178,7 +159,7 @@ const objObservateur: Observateur = {
             {/each}
         </div>
     </section>
-    <section class="actionneur__section">
+    <section class="actionneur__section" transition:fly = {{y:200, duration:1000}}>
         <span class="title">ACTIONNEUR</span>
         <div class="actionneur">
             <div class="actionneur__toggle">

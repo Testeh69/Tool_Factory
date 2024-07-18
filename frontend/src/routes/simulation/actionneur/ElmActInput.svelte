@@ -1,10 +1,9 @@
 <script lang="ts">
-    import { onMount, onDestroy } from "svelte";
     export let name: string;
     export let endpoint: string;
     export let json: string;
     export let urlApi: string;
-    let value: number = 0; // Initialize the value
+    let value: number = 0; 
     let validated: boolean;
 
     async function postData(urlApi: string, endpoint: string, json: string, value: number) {

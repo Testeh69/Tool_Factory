@@ -115,7 +115,7 @@
     {:else if name === "Porte"}
     <span class="name">{dataAPI ? "Porte Ouverte": "Porte Fermée"}</span>
     {:else if name ==="Machine"}
-    <span class="name">{dataAPI? "Machine en cours" :"Machine en Pause"}</span>
+    <span class="name">{dataAPI? "Machine en cours" :"Machine en pause"}</span>
     {:else}
     <span class="name">{name}</span>
     {/if}

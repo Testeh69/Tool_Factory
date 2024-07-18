@@ -106,6 +106,15 @@
                 background: radial-gradient(circle,#ffcc66,#cc0000);
         }
     }
+}
+
+@media (max-height: 500px) {
+    .element__actionneur__toggle{
+    height:20%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+}
 
 }
 
