@@ -287,8 +287,8 @@ def getRobotStatus():
 
 #API POWER ON
 #on => power on and brake release
-#off => powwwwwwer off
-class RobotPower:
+#off => power off
+class RobotPower(BaseModel):
     robot_power:str
 
 @app.post("/power")
@@ -310,10 +310,10 @@ def power_robot(power:RobotPower):
 #API to Load the program
 
 
-class NameProgram:
+class NameProgram(BaseModel):
     name_program:str
 
-@app.post("/program")
+@app.post("/loadprogram")
 def loading_program(load_program:RobotPower):
     result = load_program.loading#loading for key in json
     try:
@@ -329,10 +329,10 @@ def loading_program(load_program:RobotPower):
 #API to play the program loaded
 
 
-class LaunchProgram:
+class LaunchProgram(BaseModel):
     launch_program:str
 
-@app.post("/program")
+@app.post("/playprogram")
 def loading_program(launch:LaunchProgram):
     result = launch.program#loading for key in json
     try:

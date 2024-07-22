@@ -80,14 +80,14 @@ const objObservateur: Observateur = {
 
 
 .section__virtualisation{
+    background-color: #0f0c29;
+    background: linear-gradient(#0f0c29,#302b63,#24243e);
     color: #f7f7f7;
-    font-family: "Montserrat", sans-serif;
+    font-family:sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     display: flex;
     flex-direction: row;
-    background-color: #D9AFD9;
-    background-image: linear-gradient(0deg, #807eff 0%, #97D9E1 100%);
     justify-content: space-evenly;
     align-items: center;
     height:100vh;
@@ -97,9 +97,9 @@ const objObservateur: Observateur = {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background:linear-gradient(to bottom left,#222328,#a2a8ba);
+        background-color: #757492;
         height:70vh;
-        border-radius: 15px;
+        border-radius: 5px;
         border: solid 1px black;
         box-shadow: 3px 2px 2px black;
         .title{
@@ -122,9 +122,9 @@ const objObservateur: Observateur = {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background:linear-gradient(to bottom left,#222328,#a2a8ba);
+        background-color:#757492;
         height:70vh;
-        border-radius: 15px;
+        border-radius: 5px;
         border: solid 1px black;
         box-shadow: 3px 2px 2px black;
         .title{
