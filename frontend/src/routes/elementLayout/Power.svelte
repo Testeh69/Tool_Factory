@@ -80,6 +80,27 @@ const handleOnOffRobot = () =>{
     margin-left: 5px;
     border:1px solid white;
 }
+
+
+@media(max-width:740px){
+    .Power{
+        width:33px;
+        height:29px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img{
+            height:26px;
+            width: 26px;
+        }
+    }
+    .statut_robot_on_off{
+        height:20px;
+        width: 20px;
+        margin-right: 50px;
+    }
+    
+}
 </style>
 
 

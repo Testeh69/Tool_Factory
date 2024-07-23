@@ -147,6 +147,10 @@ const objObservateur: Observateur = {
   z-index: -1;
 }
 
+@media (max-width: 700px){
+    
+} 
+
 </style>
 <section class="section__virtualisation" >
     <section class="observeur__section" transition:fly = {{y:200, duration:1000}}>

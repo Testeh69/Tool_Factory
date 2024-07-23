@@ -8,28 +8,34 @@
   import Input from "./elementLayout/Input.svelte";
     
     let manual_state: boolean = false;
+    let menu_state:boolean = false;
 
+    const handleChangeMenuState = () => {
+        menu_state = menu_state ? false: true;
+    }
 
     const handleChangeManualState = () => {
         manual_state = manual_state ? false:true;
-        console.log(manual_state)    
     }
 
 
 </script>
 <style lang="scss">
 
+
+.menu_sub{
+    display: none;
+}
     .menu{
         border-bottom: 0.1px #fff solid;
         font-size: 70%;
         position: absolute;
-        height:30px;
+        height:29px;
         width: 100%;
         background:transparent;
         display: flex;
         align-items: center;
         .logo__nav{
-
             padding: 0;
             margin: 0;
             color:black;
@@ -66,14 +72,12 @@
         }
     }
         .nav__bar{
-            position: relative;
-            left:calc(100% - 43%);
             display: flex;
-            justify-content: flex-end;
-            height:40px;
-            justify-content: space-evenly;
-            align-items: center;
+            height:29px;
+
             .nav__element{
+                display: flex;
+                justify-content: space-around;
                 color:#fff;
                 display: flex;
                 flex-direction: row;  
@@ -81,7 +85,6 @@
                 justify-content: space-evenly;
                 height: 100%;
                 padding-right: 20px;
-                transition: background-color 500ms ease;
                 &:hover span{
                         font-style: oblique;
                         color:white;
@@ -96,7 +99,7 @@
                     background: linear-gradient(#0f0c29,#302b63,#24243e);
                     border-bottom-left-radius: 5px;
                     border-bottom-right-radius: 5px;
-                    height:70%;
+                    height:100%;
                 }
                 img{
                     color:white;
@@ -121,7 +124,34 @@
                     justify-content: center;
                     color:black;
                     text-decoration: none;
+                    height:30px;
                 }
+            }
+            .pictures{
+                width: 180px;
+                position: absolute;
+                right:0;
+                transition: background-color 5s ease;
+                &:hover{
+                    background-color: #0f0c29;
+                    background: linear-gradient(#0f0c29,#302b63,#24243e);
+                    border-bottom-left-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                    height:100%;
+                }}
+
+            }
+            .simulation{
+                width: 180px;
+                transition: background-color 5s ease;
+                position: absolute;
+                right:200px;
+                &:hover{
+                    background-color: #0f0c29;
+                    background: linear-gradient(#0f0c29,#302b63,#24243e);
+                    border-bottom-left-radius: 5px;
+                    border-bottom-right-radius: 5px;
+                    height:100%;
             }
         }
     }
@@ -133,15 +163,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height:5%;
+    height:20px;
     .ur_manual{
         border: solid 1px white;
         background-color: #0f0c29;
         background: linear-gradient(#0f0c29,#302b63,#24243e);
         border-radius: 7px;
         position: absolute;
-        left:90%;
+        right: 6px;
         height:100%;
+        height: 30px;
+        width: 30px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -154,14 +186,14 @@
     }
     .control_ur{
         position: absolute;
-        right:15%;
+        right:40px;
         border: solid 1px white;
         background-color: #0f0c29;
         background: linear-gradient(#0f0c29,#302b63,#24243e);
         display: flex;
         flex-direction: row;
-        width:120%;
-        height:120%;
+        width:230px;
+        height:30px;
         justify-content: space-evenly;
         align-items: center;
         border-radius: 7px;
@@ -181,11 +213,94 @@
     }
 }
 
-@media (max-width: 879px) {
+
+@media (max-width: 500px) {
     .menu{
     .nav__bar{
+        display: none;
+    }
+}
+.menu_sub{
+    display:flex;
+    position: absolute;
+    right:0%;
+    top:0%;
+    width:30px;
+    height:30px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    button{
+        img{
+            height:20px;
+            width: 20px;
+        }
+    }
+    .list_menu{
+        border: solid 1px white;
+        border-radius: 5px;
+        border: solid 1px white;
+                border-radius: 5px;
+            background-color: #fff;
+       
+        display: flex;
+        flex-direction: column;
+        width: 200px;
         position: absolute;
-        left:calc(100% - 42%);
+        top:30px;
+        right:0%;
+        height:60px;
+        font-size: 12px;
+        justify-content: center;
+        align-items: center;
+        .nav__responsive{
+            padding-bottom: 3px;
+            &:hover{
+                border: solid 1px white;
+                border-radius: 5px;
+                background-color: #0f0c29;
+                background: linear-gradient(#0f0c29,#302b63,#24243e);
+            }
+
+            &:hover img{
+                filter: brightness(0) invert(1);
+
+            }
+            &:hover span{
+                color:#fff;
+            }
+            a{  border-radius: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100%;
+                img{
+
+                    height:25px;
+                    width: 25px;
+                }
+                span{
+                    padding-left: 4px;
+                    color: black;
+                    text-decoration:none;
+                    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                    font-style: normal;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 12px;
+                }
+            }
+        }
+        .pictures_res{
+            width: 100%;
+            height:50%;
+     
+        }
+        .simulation_res{
+            width: 100%;
+            height:50%;
+        }
     }
 }
 
@@ -200,13 +315,13 @@
         </span>
     </a>
     <nav class="nav__bar">
-        <div class="nav__element">
+        <div class="nav__element simulation">
             <a href="/simulation">
                 <img src = {quarkus} alt = {quarkus}>            
                 <span>Simulation Integration</span>
             </a>
         </div>
-        <div class="nav__element">
+        <div class="nav__element pictures">
             <a href = "/pictures">
                 <img src={pictures} alt={pictures}/>
                 <span>Traitement des photos</span>
@@ -214,7 +329,28 @@
         </div>
     </nav>
 </div>
-
+<nav class="menu_sub">
+    <button class="menu_responsive" on:click={handleChangeMenuState}>
+        <img src={cross} alt={cross} style = {menu_state ? "display:visible": "display:none"} class="svg_cross">
+        <img src={menu} alt={menu} style={menu_state ? "display:none": "display:visible"} class="svg_menu">
+    </button>
+    {#if menu_state}
+    <div class="list_menu">
+        <div class="nav__responsive simulation_res">
+            <a href="/simulation">
+                <img src = {quarkus} alt = {quarkus}>            
+                <span>Simulation Integration</span>
+            </a>
+        </div>
+        <div class="nav__responsive pictures_res">
+            <a href = "/pictures">
+                <img src={pictures} alt={pictures}/>
+                <span>Traitement des photos</span>
+            </a>
+        </div>
+    </div>
+    {/if}
+</nav>
 <div class="menu__ur">
     <button class="ur_manual" on:click={handleChangeManualState}>
         <img src={cross} alt={cross} style = {manual_state ? "display:visible": "display:none"} class="svg_cross">

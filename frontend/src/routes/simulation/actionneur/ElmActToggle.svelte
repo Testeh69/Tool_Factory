@@ -76,7 +76,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    margin-top: 50px;
+    margin-top: 20px;
     height:20%;
     span{
         text-align: center;
@@ -111,11 +111,24 @@
     }
 }
 
-@media (max-height: 500px) {
+@media (max-width: 700px) {
     .element__actionneur__toggle{
-    height:20%;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    font-size:8px;
+    height:20px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    .toggle{
+        height:20px;
+        width:60px;
+        .btn__toggle{
+            height:20px;
+            width:20px;
+        }
+        .play{
+            left:calc(100% - 20px)
+        }
+
+    }
     
 }
 

@@ -104,7 +104,32 @@
 
 }
 
-  
+
+@media (max-width: 700px) {
+    .element__obs{
+        height:40px;
+        width: 50px;
+        font-size: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .column_title{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .column_data{
+            .border{
+                .light{
+                    border-radius: 15px;
+                    width:15px;
+                }
+            }
+            .actualité{
+                font-size: 15px;
+            }
+    }
+}}
 </style>
 
 <div class="element__obs">

@@ -97,6 +97,21 @@
         border-color: #cc0000;
     }
     }
+
+@media (max-width: 700px) {
+    .element__actionneur__input{
+        font-size: 8px;
+        .value_selection{
+        input[type = number]{
+            height:20px;
+            background-color: green;
+            font-size: 16px;
+
+        }}
+    }
+    
+    
+}
 </style>
 
 <div class="element__actionneur__input">
