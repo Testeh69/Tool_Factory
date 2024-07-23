@@ -4,7 +4,7 @@ import ElmActToggle from "./actionneur/ElmActToggle.svelte";
 import ElmActInput from "./actionneur/ElmActInput.svelte";
 import {fly} from "svelte/transition"
 import type { urlObject, Actionneur, Observateur } from './types'; 
-
+import Safran from "../../assets/Logo_Safran.svg"
 
 
 const urlObject: urlObject = {
@@ -97,11 +97,10 @@ const objObservateur: Observateur = {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background-color: #757492;
+        background-color: hsla(0%,0%,23%,1);
         height:70vh;
         border-radius: 5px;
-        border: solid 1px black;
-        box-shadow: 3px 2px 2px black;
+        
         .title{
             font-weight: bold;
         }
@@ -122,11 +121,10 @@ const objObservateur: Observateur = {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background-color:#757492;
+        background-color: hsla(0%,0%,23%,1);
         height:70vh;
         border-radius: 5px;
-        border: solid 1px black;
-        box-shadow: 3px 2px 2px black;
+     
         .title{
             font-weight: bold;
         }
@@ -142,7 +140,12 @@ const objObservateur: Observateur = {
         }
     }
 }
-
+.safran{
+  position: absolute;
+  top:30%;
+  left: 10%;
+  z-index: -1;
+}
 
 </style>
 <section class="section__virtualisation" >
@@ -185,6 +188,6 @@ const objObservateur: Observateur = {
             </div>
         </div>
     </section>
+    <img src={Safran} alt={Safran} class="safran" />
 </section>
-
 

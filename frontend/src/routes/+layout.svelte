@@ -2,8 +2,11 @@
     import quarkus from "../assets/quarkus.svg"
     import pictures from "../assets/pictures.svg"
     import logo from "../assets/logo.jpeg"
-
-
+    import menu from "../assets/menu.svg"
+    import cross from "../assets/cross.svg"
+    import Power from "./elementLayout/Power.svelte"
+  import Input from "./elementLayout/Input.svelte";
+    
     let manual_state: boolean = false;
 
 
@@ -124,19 +127,59 @@
     }
 .menu__ur{
     position: absolute;
-    top:95%;
-    background-color: red;
-    left:75%;
-    width:25%;
+    top:94%;
+    left:69%;
+    width:30%;
     display: flex;
     justify-content: center;
     align-items: center;
     height:5%;
     .ur_manual{
-        background-color: red;
-        border-radius: 5px;
-
-    }}
+        border: solid 1px white;
+        background-color: #0f0c29;
+        background: linear-gradient(#0f0c29,#302b63,#24243e);
+        border-radius: 7px;
+        position: absolute;
+        left:90%;
+        height:100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img{
+            height:90%;
+            width: 90%;
+            filter: brightness(0) invert(1);
+            transition:display 500ms;
+        }
+    }
+    .control_ur{
+        position: absolute;
+        right:15%;
+        border: solid 1px white;
+        background-color: #0f0c29;
+        background: linear-gradient(#0f0c29,#302b63,#24243e);
+        display: flex;
+        flex-direction: row;
+        width:120%;
+        height:120%;
+        justify-content: space-evenly;
+        align-items: center;
+        border-radius: 7px;
+        .input__program{
+            width:70%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+        .power__on{
+            width:40%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+}
 
 @media (max-width: 879px) {
     .menu{
@@ -173,11 +216,17 @@
 </div>
 
 <div class="menu__ur">
-    <button class="ur_manual">
-        ok
+    <button class="ur_manual" on:click={handleChangeManualState}>
+        <img src={cross} alt={cross} style = {manual_state ? "display:visible": "display:none"} class="svg_cross">
+        <img src={menu} alt={menu} style={manual_state ? "display:none": "display:visible"} class="svg_menu">
     </button>
-    <div class="control_ur" style = "{manual_state? "display:visible":"display:insivisble"}">
-        <h1>LOL</h1>
+    <div class="control_ur {manual_state ? "open":""}" style = "{manual_state? "display:visible":"display:none"}">
+        <span class="power__on">
+            <Power />
+        </span>
+        <span class="input__program">
+            <Input/>
+        </span>
     </div>
 </div>
  

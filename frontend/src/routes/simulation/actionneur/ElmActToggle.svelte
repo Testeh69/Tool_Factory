@@ -84,15 +84,15 @@
     .toggle{
         border-radius: 15px;
         border:solid 1px black;
-        box-shadow: 1px 1px 1px;
         margin-top: 7px;
         margin-bottom: 7px;
         width:60%;
-        background: rgb(0,22,250);
-        background: linear-gradient(100deg, rgba(0,22,250,1) 10%, rgb(79, 94, 215) 50%, rgba(6,161,254,1) 75%);                   
+        background-color: #0f0c29;
+    background: linear-gradient(#0f0c29,#302b63,#24243e);
         .btn__toggle{ 
             position: relative;      
             border-radius: 20px;
+            border: none;
             width:30px;
             height:30px;
             transition: left 0.3s;

@@ -43,6 +43,8 @@
 
 <style lang="scss">
    .element__obs{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
     font-size: 9px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -50,12 +52,12 @@
     flex-direction: column;
     align-items: center;
     border-radius: 5px;
-    background: rgb(0,22,250);
-    background: linear-gradient(120deg, rgba(0,22,250,1) 0%, rgb(79, 94, 215) 50%, rgba(6,161,254,1) 75%);            
+    background-color: #0f0c29;
+            background: linear-gradient(#0f0c29,#302b63,#24243e);
     height:40%;
     width: 100%;
     border: solid 1px black;
-    box-shadow: 1px 1px 1px;
+
     
     .column_title{
         height:50%;
@@ -77,10 +79,8 @@
             font-size: 20px;
         }
         .border{
-            background:linear-gradient(to bottom left,#222328,#a2a8ba);
             height:25px;
             width: 25px;
-            box-shadow: 1px 1px 1px;
             border-radius: 15px;
             display: flex;
             align-items: center;
@@ -90,7 +90,6 @@
                 height:80%;
                 width:80%;
                 border-radius: 15px;
-                border: solid 1px;
             }
             .rouge{
                 background: radial-gradient(circle,#ffcc66,#cc0000);

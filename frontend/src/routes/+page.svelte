@@ -1,5 +1,5 @@
 <script lang="ts">
-
+import Safran from "../assets/Logo_Safran.svg"
 
 
 
@@ -14,8 +14,13 @@
       background: linear-gradient(#0f0c29,#302b63,#24243e);
     }
 
+.safran{
+  position: absolute;
+  top:30%;
+  left: 10%;
+}
 </style>
   
 <main>
 </main>
-  
+<img src={Safran} alt={Safran} class="safran" />

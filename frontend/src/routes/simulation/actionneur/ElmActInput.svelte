@@ -64,6 +64,7 @@
 
 <style lang="scss">
     .element__actionneur__input {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         font-size: 12px;
         font-weight: bold;
         display: flex;
@@ -78,6 +79,9 @@
             margin-top: 10px;
             border-radius: 7px;
         input[type = number]{
+            border: none;
+            background-color: #0f0c29;
+            background: linear-gradient(#0f0c29,#302b63,#24243e);
             height:21px;
             width: 80px;
             border-radius: 7px;

@@ -6,7 +6,12 @@ from functionJson import inJsonGetSpecificData, inJsonUpdateSpecificData
 from variable import HIP, PORT
 import socket
 import time
+import logging
 
+
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 app = FastAPI()
 
 # Configuration pour permettre à toutes les origines d'accéder à l'API
@@ -289,23 +294,19 @@ def getRobotStatus():
 #on => power on and brake release
 #off => power off
 class RobotPower(BaseModel):
-    robot_power:str
+    robot_power:bool
+
+class RobotPower(BaseModel):
+    robot_power: bool
 
 @app.post("/power")
-def power_robot(power:RobotPower):
-    result = power.robot_power#robot_power for key in json
-    try:
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
-            client_socket.connect((HIP,PORT))
-            if result == "on":
-                client_socket.send("power on\n".encode())
-                time.sleep(3)
-                client_socket.send("brake release\n".encode())
-            elif result == "off":
-                client_socket.send("power off\n".encode())
-    except Exception as e:
-        print(f"Error => {e}")
-
+def power_on(request: RobotPower):
+    logger.info("Received request: %s", request)
+    if request.robot_power:
+        logger.info("Robot is being powered on.")
+    else:
+        logger.info("Powering off the robot.")
+    return {"status": "success", "robot_power": request.robot_power}
 
 #API to Load the program
 
