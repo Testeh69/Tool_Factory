@@ -269,78 +269,47 @@ async def websocket_parts(websocket:WebSocket):
 
 """-------------------------------------API POUR SOCKET----------------------------------------------------------------"""
 
-
-
-
-#API pour obtenir le statut du robot, pour savoir si il est en marche ou en pause
-
-
-
-
-@app.get("/status")
-def getRobotStatus():
-    try:
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
-            client_socket.connect((HIP, PORT))
-            client_socket.send("robotmode\n".encode())
-            time.sleep(1)
-            response = client_socket.recv(4096).decode()
-    except ConnectionError as e:
-        print(f"error => {e}")
-    return {"status_robot": response}
-
-
 #API POWER ON
 #on => power on and brake release
-#off => power off
-class RobotPower(BaseModel):
-    robot_power:bool
+
+
 
 class RobotPower(BaseModel):
-    robot_power: bool
+    robot_power: bool 
 
 @app.post("/power")
 def power_on(request: RobotPower):
-    logger.info("Received request: %s", request)
-    if request.robot_power:
-        logger.info("Robot is being powered on.")
-    else:
-        logger.info("Powering off the robot.")
-    return {"status": "success", "robot_power": request.robot_power}
-
-#API to Load the program
-
-
-class NameProgram(BaseModel):
-    name_program:str
-
-@app.post("/loadprogram")
-def loading_program(load_program:RobotPower):
-    result = load_program.loading#loading for key in json
-    try:
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
-            client_socket.connect((HIP,PORT))
-            client_socket.send((f"load {result}"+ "\n"))
-            time.sleep(10)
-    except Exception as e:
-        print(f"Error => {e}")
+    with open("log.txt", mode = "w+", encoding= "utf-8") as file:
+        file.write(str(request.robot_power))
+    
+    address_ip = "169.254.215.36"  
+    port = 29999
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
+        client_socket.connect((address_ip, port))
+        client_socket.send(str("power on" +"\n").encode())
+        time.sleep(5)
+        client_socket.send(str("brake release" + "\n").encode())
+        time.sleep(2)
 
 
+#API to send command dashboard directly to ur
 
-#API to play the program loaded
+class RobotCommand(BaseModel):
+    command:str
+
+@app.post("/command")
+def power_on(request: RobotCommand):
+    with open("log.txt", mode = "w+", encoding= "utf-8") as file:
+        file.write(str(request.command))
+    
+    address_ip = "169.254.215.36"  
+    port = 29999
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
+        client_socket.connect((address_ip, port))
+        client_socket.send(str(f"{request.command}" +"\n").encode())
+        time.sleep(5)
+
+        
 
 
-class LaunchProgram(BaseModel):
-    launch_program:str
 
-@app.post("/playprogram")
-def loading_program(launch:LaunchProgram):
-    result = launch.program#loading for key in json
-    try:
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
-            client_socket.connect((HIP,PORT))
-            if result == "1":
-                client_socket.send((f"play"+ "\n"))
-            time.sleep(10)
-    except Exception as e:
-        print(f"Error => {e}")

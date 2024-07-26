@@ -1,8 +1,12 @@
-from functionJson import inJsonGetSpecificData,inJsonUpdateSpecificData
+import socket
+import time
 
-print(inJsonGetSpecificData("historique"))
-inJsonUpdateSpecificData("historique", 6)
-print(inJsonGetSpecificData("historique"))
 
-scan_status = inJsonGetSpecificData("scan_status")
-print(scan_status)
+address_ip = "169.254.215.36"
+port = 29999
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
+    client_socket.connect((address_ip, port))
+    client_socket.send("power on\n".encode())
+    time.sleep(5)
+    client_socket.send("brake release\n".encode())
+    time.sleep(5)

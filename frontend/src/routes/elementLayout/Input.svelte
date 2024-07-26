@@ -1,5 +1,47 @@
 <script lang="ts">
 import Launch from "../../assets/launch.svg"
+
+
+
+const urlApi :string = "http://127.0.0.1:8081"
+const endpoint: string = "/command"
+const json: string = "command"
+
+let validated:boolean = true;
+let command:String = "";
+
+async function postData(urlApi:string,endpoint:string, json:string){
+        try{
+            console.log("ok")
+            const response = await fetch(`${urlApi}${endpoint}`, 
+                {
+                    method: "POST",
+                    headers:{
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({[json]:command})
+                }
+            )
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const result = await response.json();
+            validated = true;
+        } catch (error) {
+            console.error("Error sending POST request:", error);
+            validated = false;
+        }
+    }
+
+const sendCommandUr = () => {
+    const element = document.querySelector(".search") as HTMLInputElement;
+    command = element.value;
+    postData(urlApi,endpoint, json)
+    element.value = "" ;
+}
+
+
 </script>
 <style lang="scss">
 
@@ -82,8 +124,8 @@ import Launch from "../../assets/launch.svg"
 
 
 <div class="load__program">
-    <input type ="search">
+    <input type ="search" class="search">
 </div>
-<button class="launch__program">
+<button class="launch__program" on:click = {sendCommandUr}>
     <img src={Launch} alt={Launch} class="Launch" />
 </button>
