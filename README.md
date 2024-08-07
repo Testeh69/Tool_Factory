@@ -8,4 +8,4 @@ This typescript branch is the actual developped branch.
 
 
 
-### Warning: We need npm, python for launching this app and a windows computer, you juste have to launch the file launch.ps1 then this files will execute a power shell script that will execute all the command to make the app functionning.
+### Warning: We need npm, python for launching this app and a windows computer, you just have to launch the file launch.ps1 then this files will execute a power shell script that will execute all the command to make the app functionning.
