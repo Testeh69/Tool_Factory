@@ -1,3 +1,5 @@
+# This Branch is deprecated, the actual branch is the typescript
+
 App developped to test the architecture between an universal robot and an engraving.
 
 Important: It is just a tool made for testing and debuging the Architecure and the Program of the UR
