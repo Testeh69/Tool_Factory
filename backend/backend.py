@@ -3,7 +3,15 @@ from fastapi.middleware.cors import CORSMiddleware
 import asyncio
 from pydantic import BaseModel
 from functionJson import inJsonGetSpecificData, inJsonUpdateSpecificData
+from variable import HIP, PORT
+import socket
+import time
+import logging
 
+
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 app = FastAPI()
 
 # Configuration pour permettre à toutes les origines d'accéder à l'API
@@ -24,7 +32,6 @@ async def send_scan_status(websocket:WebSocket):
     try:
         while True:
             scan_status = inJsonGetSpecificData("scan_status")
-            
             await websocket.send_json({"scan_status": scan_status})
             await asyncio.sleep(1)          
     except FileNotFoundError:
@@ -42,7 +49,7 @@ async def websocket_scan(websocket:WebSocket):
 @app.get("/scan")
 def read_scan():
     result = inJsonGetSpecificData("scan_status")
-    return{"scan":int(result)}
+    return{"scan_status":int(result)}
 
 class ScanState(BaseModel):
     state_scan:bool   
@@ -96,7 +103,7 @@ def write_porte(porte_state: PorteState):
 @app.get("/porte")
 def read_porte():
     result = inJsonGetSpecificData("porte")
-    return{"porte":bool(result)}
+    return{"Porte_Ouverte":int(result)}
     
 #Le donnée historique indique a qu'elle étape le robot se situe et si il y a un problème, le robot doit agir directement à cette étape
 #0 à 6
@@ -191,7 +198,23 @@ async def write_cycle(data: TimeCycle):
         return False
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+async def send_time_cycle(websocket:WebSocket):
+    await websocket.accept()
+    try:
+        while True:
+            time_cycle = inJsonGetSpecificData("cycle")
+            await websocket.send_json({"time_cycle": time_cycle})
+            await asyncio.sleep(1)  
+    except FileNotFoundError:
+        await websocket.close(code=1011, reason="File not found")
+    except Exception as e:
+        await websocket.close(code=1011, reason=str(e))
 
+
+@app.websocket("/cycle")
+async def websocket_time_cycle(websocket:WebSocket):
+    await send_time_cycle(websocket)
 
 @app.get("/cycle")
 def read_time_cycle():
@@ -241,3 +264,52 @@ async def send_parts(websocket:WebSocket):
 @app.websocket("/parts")
 async def websocket_parts(websocket:WebSocket):
     await send_parts(websocket)
+
+
+
+"""-------------------------------------API POUR SOCKET----------------------------------------------------------------"""
+
+#API POWER ON
+#on => power on and brake release
+
+
+
+class RobotPower(BaseModel):
+    robot_power: bool 
+
+@app.post("/power")
+def power_on(request: RobotPower):
+    with open("log.txt", mode = "w+", encoding= "utf-8") as file:
+        file.write(str(request.robot_power))
+    
+    address_ip = "169.254.215.36"  
+    port = 29999
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
+        client_socket.connect((address_ip, port))
+        client_socket.send(str("power on" +"\n").encode())
+        time.sleep(5)
+        client_socket.send(str("brake release" + "\n").encode())
+        time.sleep(2)
+
+
+#API to send command dashboard directly to ur
+
+class RobotCommand(BaseModel):
+    command:str
+
+@app.post("/command")
+def power_on(request: RobotCommand):
+    with open("log.txt", mode = "w+", encoding= "utf-8") as file:
+        file.write(str(request.command))
+    
+    address_ip = "169.254.215.36"  
+    port = 29999
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
+        client_socket.connect((address_ip, port))
+        client_socket.send(str(f"{request.command}" +"\n").encode())
+        time.sleep(5)
+
+        
+
+
+

@@ -4,17 +4,21 @@ from functionJson import inJsonGetSpecificData, inJsonUpdateSpecificData
 
 """--------------------------------------------POST-----------------------------------------------------------"""
 def sendNbParts(value:int):
-    inJsonUpdateSpecificData("parts",value)
+    #sendTheNumberOf parts that the robots have loaded
+    inJsonUpdateSpecificData("parts",int(value))
+    return 1
 
 
 def sendStateProgram():
     #update the state of the machine
     inJsonUpdateSpecificData("porte",0)
     inJsonUpdateSpecificData("statemachine",1)
-    
+    return 1
+
 def sendHistorique(value:int):
     #update the historique parameter
-    inJsonUpdateSpecificData("historique",value)
+    inJsonUpdateSpecificData("historique",int(value))
+    return 1
 
 
 def sendCycleProgram():
@@ -28,6 +32,7 @@ def sendCycleProgram():
         print('Programme Finis')
         inJsonUpdateSpecificData("statemachine",0)
         inJsonUpdateSpecificData("porte",1)
+    return 1
 
   
 
@@ -69,5 +74,7 @@ server.register_function(getStateProgram, "getState")
 server.register_function(getStatePorte, "getPorte")
 server.register_function(getHistorique, "getHistorique")
 server.register_function(sendHistorique, "sendHistorique")
+server.register_function(getNbParts, "getParts")
+server.register_function(sendNbParts, "sendParts")
 
 server.serve_forever()
